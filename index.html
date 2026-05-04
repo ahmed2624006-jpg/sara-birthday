@@ -13,124 +13,99 @@
         /* شاشات الدخول */
         #music-gate, #password-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary-pink); z-index: 5000;
+            background: var(--primary-pink); z-index: 9000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; padding: 20px;
         }
-        #password-screen { background: var(--white); display: none; z-index: 4000; }
+        #password-screen { background: var(--white); display: none; z-index: 8000; }
         .start-btn, .login-box button {
-            background: white; color: var(--primary-pink); border: none;
-            padding: 15px 40px; border-radius: 50px; font-size: 18px; font-weight: bold;
-            cursor: pointer; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: white; color: var(--primary-pink); border: none; padding: 15px 40px; 
+            border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px;
         }
-        .login-box button { background: var(--primary-pink); color: white; border-radius: 10px; width: 100%; }
-        .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 10px; width: 100%; text-align: center; margin-bottom: 10px; outline: none; color: #333; }
+        .login-box button { background: var(--primary-pink); color: white; width: 100%; border-radius: 10px; }
+        .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 10px; width: 100%; text-align: center; margin-bottom: 10px; outline: none; }
 
-        #main-content { display: none; padding-bottom: 100px; text-align: center; position: relative; }
+        #main-content { display: none; padding-bottom: 50px; text-align: center; }
         header h1 { font-family: 'Pacifico'; font-size: 2.2rem; color: var(--primary-pink); padding: 25px; }
-        .countdown-container { background: white; padding: 10px 20px; border-radius: 15px; width: fit-content; margin: 0 auto 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
-        #countdown { font-size: 1.4rem; color: var(--primary-pink); font-weight: bold; }
 
-        /* كرت الكشط الذهبي المطور */
-        .scratch-container {
-            position: relative; width: 95%; max-width: 650px; min-height: 380px;
-            margin: 25px auto; background: white; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden;
-            border: 3px solid var(--white);
-        }
-        #scratch-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 5; border-radius: 20px; }
-        
-        /* محتوى الميموري (الصورة + الرسالة العربي جنب بعض) */
-        .memory-content {
-            display: none; padding: 30px; opacity: 0; transition: 1s;
-            flex-direction: row; align-items: center; justify-content: center; gap: 25px;
-        }
-        .memory-content.visible { display: flex; opacity: 1; }
-        .memory-photo { width: 160px; height: 160px; object-fit: cover; border-radius: 20px; border: 4px solid var(--light-pink); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .memory-text { flex: 1; color: var(--dark-pink); font-weight: bold; font-size: 15px; line-height: 1.8; text-align: right; }
+        /* الأظرف */
+        .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 20px; margin-top: 20px; }
+        .envelope-wrapper { width: 220px; height: 150px; position: relative; cursor: pointer; }
+        .envelope-img { width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .envelope-img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); }
+        .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
 
-        /* فقاعات الكلام واضحة جداً وسريعة */
+        /* مودال الكتاب (بيظهر في نص الشاشة) */
+        .book-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 10000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .book-container {
+            width: 90%; max-width: 800px; height: 450px;
+            background: white; border-radius: 15px;
+            display: flex; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: openBook 0.6s ease-out;
+            position: relative;
+        }
+        @keyframes openBook { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* الصفحة الشمال (الكلام) */
+        .book-left {
+            flex: 1.2; padding: 40px; display: flex; flex-direction: column;
+            justify-content: center; text-align: left; background: #fff;
+            border-right: 2px solid #f0f0f0;
+        }
+        .book-left p { font-size: 1.2rem; color: #444; font-style: italic; line-height: 1.6; font-family: 'Georgia', serif; }
+
+        /* الصفحة اليمين (الصورة + هابي بيرث داي) */
+        .book-right {
+            flex: 1; background: #fdf2f8; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .book-right img { width: 90%; height: 70%; object-fit: cover; border-radius: 10px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 15px; font-size: 1.5rem; }
+
+        .close-book {
+            position: absolute; top: 15px; right: 20px; font-size: 30px;
+            color: #999; cursor: pointer; z-index: 10;
+        }
+
+        /* كارت الكشط */
+        .scratch-box { width: 90%; max-width: 600px; margin: 20px auto; background: white; border-radius: 20px; position: relative; min-height: 250px; overflow: hidden; }
+        #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 5; }
+        .scratch-content { padding: 30px; display: flex; align-items: center; gap: 20px; text-align: right; }
+
+        /* فقاعات الكلام */
         .bubble {
-            position: fixed; bottom: -120px; 
-            background: rgba(255, 255, 255, 0.7); 
-            border-radius: 50px; padding: 10px 20px; 
-            color: var(--primary-pink);
-            font-weight: bold; font-size: 14px;
-            z-index: 10; animation: floatUp 8s linear forwards; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border: 1px solid rgba(216, 27, 96, 0.3);
-            white-space: nowrap;
+            position: fixed; bottom: -100px; background: rgba(255,255,255,0.8);
+            padding: 10px 20px; border-radius: 50px; color: var(--primary-pink);
+            font-weight: bold; z-index: 1; animation: floatUp 6s linear forwards;
+            border: 1px solid var(--primary-pink);
         }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-130vh) translateX(40px); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-120vh); opacity: 0; } }
 
-        /* ميكانيزم الأظرف الجديد (زي الفيديو) المطبق على كل ظرف */
-        .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 20px; margin-top: 50px; }
-        .envelope-wrapper { position: relative; width: 250px; height: 170px; perspective: 1000px; margin-bottom: 60px; }
-        
-        .envelope {
-            position: relative; width: 100%; height: 100%; background: #f48fb1;
-            border-radius: 0 0 10px 10px; cursor: pointer; z-index: 2;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .flap {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0);
-            transition: transform 0.5s ease; z-index: 3; transform-origin: top;
-        }
-
-        /* كرت الكتاب اللي بيطلع من كل ظرف */
-        .card-fold {
-            position: absolute; bottom: 10px; left: 5%; width: 90%; height: 150px;
-            background: white; z-index: 1; transition: all 0.8s ease;
-            transform-style: preserve-3d; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: flex; cursor: pointer;
-        }
-
-        /* صفحات الكرت */
-        .card-page {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-            background: white; border: 1px solid #eee; backface-visibility: hidden;
-            transition: transform 0.7s ease; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 10px; border-radius: 5px;
-        }
-        .card-right { z-index: 2; transform-origin: left; } /* الصفحة اللي بتفتح لليمين */
-        .card-left { z-index: 1; background: #fffcfc; } /* الصفحة الثابتة تحت */
-
-        /* تأثيرات الفتح */
-        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
-        .envelope-wrapper.open .card-fold { transform: translateY(-180px); height: 220px; z-index: 10; width: 100%; left: 0; }
-        
-        .envelope-wrapper.card-open .card-right { transform: rotateY(-160deg); }
-        .envelope-wrapper.card-open .card-fold { width: 200%; left: -50%; } 
-
-        /* محتوى الكرت */
-        .card-page img { width: 80%; height: 110px; object-fit: cover; border-radius: 5px; margin-bottom: 5px; }
-        .card-page h3 { font-family: 'Pacifico'; font-size: 14px; color: var(--primary-pink); margin-bottom: 3px; }
-        .card-page p { font-size: 11px; color: #555; line-height: 1.4; text-align: center; font-style: italic; padding: 5px; }
-        
-        .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 15px; display: block; text-align: center; }
-
-        @media (max-width: 600px) {
-            .envelope-wrapper.card-open .card-fold { width: 180%; left: -40%; }
-            .card-page p { font-size: 10px; }
-            .scratch-container { width: 95%; max-width: 400px; min-height: 380px; }
-            .memory-content { flex-direction: column; text-align: center; }
-            .memory-photo { width: 130px; height: 130px; }
+        @media (max-width: 768px) {
+            .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; }
+            .book-left { padding: 20px; text-align: center; }
+            .book-right img { height: 200px; }
         }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop preload="auto"><source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop><source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg"></audio>
 
     <div id="music-gate">
-        <h2 style="font-family:'Pacifico'; font-size: 2.8rem;">Sarsora's World ❤️🪐</h2>
+        <h2 style="font-family:'Pacifico'; font-size: 2.5rem;">Sarsora's World ❤️🪐</h2>
         <button class="start-btn" onclick="startEverything()">شغلي المفاجأة ✨</button>
     </div>
 
     <div id="password-screen">
         <div class="login-box">
-            <h2 style="color:var(--primary-pink); font-family:'Pacifico'; font-size: 2rem; margin-bottom: 25px;">كلمة السر ❤️🪐</h2>
+            <h2 style="font-family:'Pacifico'; color:var(--primary-pink);">كلمة السر ❤️</h2>
             <input type="password" id="passInput" placeholder="اكتبي الباسورد هنا">
             <button onclick="checkPassword()">دخول ✨</button>
         </div>
@@ -138,143 +113,44 @@
 
     <div id="main-content">
         <header><h1>Happy Birthday Sarsora 💖🪐</h1></header>
-        <div class="countdown-container"><span id="countdown">00:00:00:00</span></div>
 
-        <div class="scratch-container">
+        <div class="scratch-box">
             <canvas id="scratch-canvas"></canvas>
-            <div class="memory-content" id="memory-box">
-                <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png" class="memory-photo">
-                <div class="memory-text">اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐</div>
+            <div class="scratch-content">
+                <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png" style="width:100px; border-radius:10px;">
+                <p style="font-size:14px; font-weight:bold; color:var(--dark-pink);">اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي.. كل سنة وانتي طيبة يروحي ❤️🪐</p>
             </div>
         </div>
 
-        <div class="envelope-container">
-            <div class="envelope-wrapper" id="env1">
-                <div class="envelope" onclick="handleEnvelope(1)">
-                    <div class="flap"></div>
-                    <div class="card-fold" onclick="handleCard(1, event)">
-                        <div class="card-page card-right">
-                            <img src="https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png">
-                            <h3>Happy Birthday Sarsora</h3>
-                        </div>
-                        <div class="card-page card-left">
-                            <p>"Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be." ❤️🪐</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="outer-ar-msg">بحبك يا روحي ❤️🪐</span>
+        <div class="envelope-container" id="container">
             </div>
+    </div>
 
-            <div class="envelope-wrapper" id="env2">
-                <div class="envelope" onclick="handleEnvelope(2)">
-                    <div class="flap"></div>
-                    <div class="card-fold" onclick="handleCard(2, event)">
-                        <div class="card-page card-right">
-                            <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
-                            <h3>Universe's Gift</h3>
-                        </div>
-                        <div class="card-page card-left">
-                            <p>"From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light." ❤️🪐</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="outer-ar-msg">ربنا يخليكي ليا يا نن عيني ❤️🪐</span>
+    <div class="book-overlay" id="bookOverlay">
+        <div class="book-container">
+            <span class="close-book" onclick="closeBook()">&times;</span>
+            <div class="book-left">
+                <p id="bookText"></p>
             </div>
-
-            <div class="envelope-wrapper" id="env3">
-                <div class="envelope" onclick="handleEnvelope(3)">
-                    <div class="flap"></div>
-                    <div class="card-fold" onclick="handleCard(3, event)">
-                        <div class="card-page card-right">
-                            <img src="https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png">
-                            <h3>Together Forever</h3>
-                        </div>
-                        <div class="card-page card-left">
-                            <p>"Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget." ❤️🪐</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="outer-ar-msg">كل سنه واحنا مع بعض يقلبي ❤️🪐</span>
-            </div>
-
-            <div class="envelope-wrapper" id="env4">
-                <div class="envelope" onclick="handleEnvelope(4)">
-                    <div class="flap"></div>
-                    <div class="card-fold" onclick="handleCard(4, event)">
-                        <div class="card-page card-right">
-                            <img src="https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png">
-                            <h3>Special One</h3>
-                        </div>
-                        <div class="card-page card-left">
-                            <p>"Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world." ❤️🪐</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="outer-ar-msg">بجد مش عارف من غيرك كنت هبقى فين ❤️🪐</span>
-            </div>
-
-            <div class="envelope-wrapper" id="env5">
-                <div class="envelope" onclick="handleEnvelope(5)">
-                    <div class="flap"></div>
-                    <div class="card-fold" onclick="handleCard(5, event)">
-                        <div class="card-page card-right">
-                            <img src="https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png">
-                            <h3>Agla Sarsora</h3>
-                        </div>
-                        <div class="card-page card-left">
-                            <p>"Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever." ❤️🪐</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="outer-ar-msg">أغلى سارسورة في الدنيا ❤️🪐</span>
-            </div>
-
-            <div class="envelope-wrapper" id="env6">
-                <div class="envelope" onclick="handleEnvelope(6)">
-                    <div class="flap"></div>
-                    <div class="card-fold" onclick="handleCard(6, event)">
-                        <div class="card-page card-right">
-                            <img src="https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png">
-                            <h3>Soulmate ✨</h3>
-                        </div>
-                        <div class="card-page card-left">
-                            <p>"You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark." ❤️🪐</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="outer-ar-msg">أقرب واحدة لقلبي ❤️🪐</span>
+            <div class="book-right">
+                <img id="bookImg" src="">
+                <h2>Happy Birthday ✨</h2>
             </div>
         </div>
     </div>
 
     <script>
-        // دالة لفتح الظرف
-        function handleEnvelope(id) {
-            const el = document.getElementById('env' + id);
-            // غلق أي ظرف آخر مفتوح قبل فتح الجديد
-            document.querySelectorAll('.envelope-wrapper').forEach(wrapper => {
-                if(wrapper.id !== 'env'+id) {
-                    wrapper.classList.remove('open');
-                    wrapper.classList.remove('card-open');
-                }
-            });
-            el.classList.toggle('open');
-            // إذا أغلق الظرف، غلق الكرت بالداخل أيضاً
-            if (!el.classList.contains('open')) el.classList.remove('card-open');
-        }
-
-        // دالة لفتح الكرت داخل الظرف
-        function handleCard(id, event) {
-            event.stopPropagation(); // منع غلق الظرف عند الضغط على الكرت
-            const el = document.getElementById('env' + id);
-            // لا يفتح الكرت إلا إذا كان الظرف مفتوحاً والكارت قد خرج
-            if (el.classList.contains('open')) {
-                el.classList.toggle('card-open');
-            }
-        }
+        const data = [
+            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world.", ar: "بحبك يا روحي ❤️" },
+            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe guiding me to you.", ar: "نن عيني ❤️" },
+            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens, your laugh reaches me like sunlight—warm and impossible to forget.", ar: "كل سنة واحنا سوا ❤️" },
+            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.'", ar: "أغلى من حياتي ❤️" },
+            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "My heart knew where it wanted to stay—with you, in every quiet piece of forever.", ar: "أحلى سارسورة ❤️" },
+            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person, you're my favorite place to be. Always here for you.", ar: "أقرب حد لقلبي ❤️" }
+        ];
 
         function startEverything() {
-            document.getElementById('bgMusic').play().catch(e => console.log("Music"));
+            document.getElementById('bgMusic').play();
             document.getElementById('music-gate').style.display = 'none';
             document.getElementById('password-screen').style.display = 'flex';
         }
@@ -283,11 +159,31 @@
             if (document.getElementById('passInput').value.toLowerCase().trim() === 'i love you') {
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                startCountdown();
-                // الفقاعات سريعة وتظهر كل 3 ثواني
-                setInterval(createBubble, 3000); 
+                renderEnvelopes();
                 initScratch();
-            } else { alert('الباسورد غلط يا روحي ❤️🪐'); }
+                setInterval(createBubble, 3000);
+            } else { alert('الباسورد غلط ❤️'); }
+        }
+
+        function renderEnvelopes() {
+            const container = document.getElementById('container');
+            data.forEach((item, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'envelope-wrapper';
+                wrapper.innerHTML = `<div class="envelope-img"></div><span class="outer-ar-msg">${item.ar}</span>`;
+                wrapper.onclick = () => openBook(index);
+                container.appendChild(wrapper);
+            });
+        }
+
+        function openBook(index) {
+            document.getElementById('bookImg').src = data[index].img;
+            document.getElementById('bookText').innerText = data[index].en;
+            document.getElementById('bookOverlay').style.display = 'flex';
+        }
+
+        function closeBook() {
+            document.getElementById('bookOverlay').style.display = 'none';
         }
 
         function initScratch() {
@@ -295,58 +191,32 @@
             const ctx = canvas.getContext('2d');
             canvas.width = canvas.parentElement.offsetWidth;
             canvas.height = canvas.parentElement.offsetHeight;
-            
-            ctx.fillStyle = '#fdd835'; // ذهبي
+            ctx.fillStyle = '#fdd835';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 20px Cairo'; ctx.textAlign = 'center';
+            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 18px Cairo'; ctx.textAlign = 'center';
             ctx.fillText('خربشي الكارت يروحي ❤️🪐', canvas.width/2, canvas.height/2);
 
-            let isDrawing = false;
-            function scratch(e) {
-                if(!isDrawing) return;
+            let drawing = false;
+            canvas.onmousedown = canvas.ontouchstart = () => drawing = true;
+            window.onmouseup = window.ontouchend = () => drawing = false;
+            canvas.onmousemove = canvas.ontouchmove = (e) => {
+                if(!drawing) return;
                 const rect = canvas.getBoundingClientRect();
                 const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
                 const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI*2); ctx.fill();
-                
-                const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-                let clear = 0;
-                for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
-                if(clear/(pixels.length/4) > 0.45) {
-                    canvas.style.opacity = '0';
-                    setTimeout(() => { 
-                        canvas.style.display = 'none';
-                        document.getElementById('memory-box').classList.add('visible');
-                    }, 500);
-                }
-            }
-            canvas.onmousedown = canvas.ontouchstart = () => isDrawing = true;
-            window.onmouseup = window.ontouchend = () => isDrawing = false;
-            canvas.onmousemove = canvas.ontouchmove = scratch;
+                ctx.beginPath(); ctx.arc(x, y, 30, 0, Math.PI*2); ctx.fill();
+            };
         }
 
         function createBubble() {
-            const words = ['بحبك اوي ❤️🪐', 'أغلى سارسورة', 'يا نصيبي يقمري', 'أنتي كوني كله ✨', 'سارسورة قلبي', 'كل سنة وانتي طيبة'];
+            const words = ['بحبك ❤️', 'سارسورة ✨', 'يقلبي 🪐', 'جميلتي'];
             const b = document.createElement('div');
             b.className = 'bubble';
-            b.innerHTML = words[Math.floor(Math.random()*words.length)];
-            b.style.left = (Math.random()*70 + 15) + 'vw';
-            b.style.animationDuration = (Math.random()*2 + 7) + 's'; // سرعة الطيران
+            b.innerText = words[Math.floor(Math.random()*words.length)];
+            b.style.left = Math.random()*80 + 10 + 'vw';
             document.body.appendChild(b);
-            setTimeout(() => b.remove(), 8000); // إزالة الفقاعة أسرع
-        }
-
-        function startCountdown() {
-            const target = new Date("June 16, 2026 00:00:00").getTime();
-            setInterval(() => {
-                const diff = target - new Date().getTime();
-                const d = Math.floor(diff/86400000);
-                const h = Math.floor((diff%86400000)/3600000);
-                const m = Math.floor((diff%3600000)/60000);
-                const s = Math.floor((diff%60000)/1000);
-                document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-            }, 1000);
+            setTimeout(() => b.remove(), 6000);
         }
     </script>
 </body>
