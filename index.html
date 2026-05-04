@@ -22,131 +22,86 @@
             min-height: 100vh;
         }
 
-        /* شاشة الباسورد */
         #password-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary-pink);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary-pink); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
             transition: 0.8s ease-in-out;
         }
 
         .login-box {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 400px;
+            background: var(--white); padding: 40px; border-radius: 20px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%; max-width: 400px;
         }
 
-        .login-box h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-bottom: 20px; }
         .login-box input {
             padding: 12px; border: 2px solid var(--primary-pink);
             border-radius: 10px; width: 100%; text-align: center; font-size: 18px; outline: none;
         }
+
         .login-box button {
             margin-top: 15px; background: var(--primary-pink); color: white;
             border: none; padding: 10px 30px; border-radius: 10px; cursor: pointer; font-weight: bold;
         }
 
-        /* المحتوى الرئيسي */
         #main-content { display: none; padding-bottom: 50px; }
 
-        header { text-align: center; padding: 60px 20px; }
-        header h1 { font-family: 'Pacifico'; font-size: 3rem; color: var(--primary-pink); }
+        header { text-align: center; padding: 40px 20px; }
+        header h1 { font-family: 'Pacifico'; font-size: 2.5rem; color: var(--primary-pink); }
+        .b-date { font-size: 1.5rem; color: var(--dark-pink); margin-top: 10px; font-weight: bold; }
 
-        /* سيكشن الأظرف */
+        .countdown-container {
+            text-align: center; margin: 20px auto; background: var(--white);
+            padding: 15px; border-radius: 15px; width: fit-content; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        #countdown { font-size: 1.5rem; color: var(--primary-pink); font-weight: bold; }
+        .days-left-text { font-size: 1.1rem; color: #555; margin-right: 10px; font-weight: bold; }
+
         .envelope-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 80px;
-            padding: 20px;
-            margin-top: 50px;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;
+            padding: 20px; margin-top: 100px;
         }
 
-        .envelope-wrapper {
-            position: relative;
-            width: 320px;
-            height: 220px;
-        }
+        .envelope-wrapper { position: relative; width: 300px; height: 200px; margin-bottom: 150px; }
 
         .envelope {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: #f48fb1;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            cursor: pointer;
-            z-index: 2;
+            position: relative; width: 100%; height: 100%;
+            background: #f48fb1; border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; z-index: 2;
         }
 
         .envelope .flap {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #e91e63;
-            clip-path: polygon(0 0, 50% 55%, 100% 0);
-            transform-origin: top;
-            transition: 0.6s;
-            z-index: 3;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0);
+            transform-origin: top; transition: 0.6s; z-index: 3;
         }
 
         .letter {
-            position: absolute;
-            bottom: 10px; left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            height: 90%;
-            background: white;
-            padding: 15px;
-            text-align: left; /* لضبط اتجاه الإنجليزي */
-            transition: 0.6s;
-            z-index: 1;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            overflow-y: auto;
+            position: absolute; bottom: 10px; left: 50%;
+            transform: translateX(-50%); width: 95%; height: 95%;
+            background: white; padding: 15px; text-align: center;
+            transition: 0.6s; z-index: 1; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden; display: flex; flex-direction: column; align-items: center;
         }
 
-        .letter img {
-            width: 100%; height: 120px; object-fit: cover; border-radius: 5px;
-            margin-bottom: 10px; transition: 0.5s;
-        }
-
-        .letter p {
-            font-size: 13px; color: #444; line-height: 1.5; font-family: sans-serif;
-            font-style: italic;
-        }
-
-        /* حركات الفتح */
-        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
-        .envelope-wrapper.open .letter { 
-            transform: translateX(-50%) translateY(-150px); 
-            height: 320px; 
-            z-index: 4; 
-        }
-
-        .btn-group { margin-top: 15px; text-align: center; display: none; }
-        .envelope-wrapper.open .btn-group { display: block; }
+        .letter img { width: 100%; height: 120px; object-fit: cover; border-radius: 5px; margin-bottom: 8px; }
         
+        .ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-bottom: 5px; }
+        .en-msg { color: #555; font-size: 11px; line-height: 1.3; font-style: italic; }
+
+        .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter { transform: translateX(-50%) translateY(-180px); height: 350px; z-index: 4; }
+
         .change-btn {
             background: var(--primary-pink); color: white; border: none;
-            padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 12px;
-            font-family: 'Cairo'; box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 10px;
+            margin-top: 10px; font-family: 'Cairo';
         }
 
-        /* قلوب طايرة */
-        .heart {
-            position: fixed; color: #ff4081; animation: float 5s linear infinite;
-            z-index: -1; pointer-events: none;
-        }
+        .heart { position: fixed; color: #ff4081; animation: float 5s linear infinite; z-index: -1; pointer-events: none; }
         @keyframes float {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
@@ -161,29 +116,32 @@
 
     <div id="password-screen">
         <div class="login-box">
-            <h2>عالم سارسورة ❤️</h2>
-            <input type="password" id="passInput" placeholder="اكتب i love you هنا">
-            <button onclick="checkPassword()">افتحي الهدية 🎁</button>
+            <h2 style="font-family:'Pacifico'; color:#d81b60">Sarsora ❤️</h2>
+            <input type="password" id="passInput" placeholder="اكتب i love you">
+            <button onclick="checkPassword()">دخول ✨</button>
         </div>
     </div>
 
     <div id="main-content">
         <header>
             <h1>Happy Birthday Sarsora 💖</h1>
+            <div class="b-date">16 / 6 / 2008</div>
         </header>
+
+        <div class="countdown-container">
+            <span id="countdown">00:00:00:00</span>
+            <span class="days-left-text">days left sarsora</span>
+        </div>
 
         <div class="envelope-container">
             <div class="envelope-wrapper">
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
-                        <img id="img1" src="https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png" alt="Sarsora 1">
-                        <p id="txt1">
-                            "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be..."
-                        </p>
-                        <div class="btn-group">
-                            <button class="change-btn" onclick="nextStage(1)">افتحي الرسالة التالية ✨</button>
-                        </div>
+                        <img id="img1" src="https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png">
+                        <p class="ar-msg">بحبك يا روحي ❤️🪐</p>
+                        <p id="txt1" class="en-msg">"Since our first conversation, you've been the quiet spark that changed my world..."</p>
+                        <button class="change-btn" onclick="nextStage(1); event.stopPropagation();">See More ✨</button>
                     </div>
                 </div>
             </div>
@@ -192,26 +150,55 @@
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
-                        <img id="img2" src="https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png" alt="Sarsora 2">
-                        <p id="txt2">
-                            "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You brought warmth into parts of me..."
-                        </p>
-                        <div class="btn-group">
-                            <button class="change-btn" onclick="nextStage(2)">افتحي الرسالة التالية ✨</button>
-                        </div>
+                        <img id="img2" src="https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png">
+                        <p class="ar-msg">ربنا يخليكي ليا يا نن عيني ❤️🪐</p>
+                        <p id="txt2" class="en-msg">"From the moment we met, something in my life shifted—like the universe guiding me..."</p>
+                        <button class="change-btn" onclick="nextStage(2); event.stopPropagation();">See More ✨</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="flap"></div>
+                    <div class="letter">
+                        <img id="img3" src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
+                        <p class="ar-msg">كل سنه واحنا مع بعض يقلبي ❤️🪐</p>
+                        <p id="txt3" class="en-msg">"Every notification from you feels like a heartbeat whispering 'I'm here'..."</p>
+                        <button class="change-btn" onclick="nextStage(3); event.stopPropagation();">See More ✨</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="envelope-wrapper">
+                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
+                    <div class="flap"></div>
+                    <div class="letter">
+                        <img id="img4" src="https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png">
+                        <p class="ar-msg">بجد مش عارف من غيرك كنت هبقى فين ❤️🪐</p>
+                        <p id="txt4" class="en-msg">"Even through screens and pixels, your laugh reaches me like sunlight..."</p>
+                        <button class="change-btn" onclick="nextStage(4); event.stopPropagation();">See More ✨</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="music-control">
-            <button class="music-btn" onclick="toggleMusic()">🎵 شغل أغنية الهضبة</button>
+            <button class="music-btn" onclick="toggleMusic()">🎵 تشغيل الأغنية</button>
         </div>
-        <iframe id="player" width="0" height="0" src="https://www.youtube.com/embed/5F-0h_2S7eQ?enablejsapi=1" frameborder="0"></iframe>
+        <div id="youtube-player"></div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // دالة التأكد من كلمة السر
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', width: '0', videoId: '5F-0h_2S7eQ',
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': '5F-0h_2S7eQ' }
+            });
+        }
+
         function checkPassword() {
             const pass = document.getElementById('passInput').value.toLowerCase().trim();
             if (pass === 'i love you') {
@@ -219,35 +206,37 @@
                 setTimeout(() => {
                     document.getElementById('password-screen').style.display = 'none';
                     document.getElementById('main-content').style.display = 'block';
-                    initHearts(); // بدء أنيميشن القلوب
+                    initHearts();
+                    startCountdown();
+                    if(player) player.playVideo();
                 }, 800);
-            } else { 
-                alert('كلمة السر غلط يا سوسو! ❤️'); 
-            }
+            } else { alert('كلمة السر غلط! ❤️'); }
         }
 
-        // دالة تغيير المرحلة داخل الظرف (الصور والرسائل)
-        function nextStage(envNum) {
-            const img = document.getElementById('img' + envNum);
-            const txt = document.getElementById('txt' + envNum);
-            
-            img.style.opacity = '0'; // تأثير اختفاء
-            
-            setTimeout(() => {
-                if (envNum === 1) {
-                    img.src = "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png";
-                    txt.innerHTML = "Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment, every smile, every quiet piece of forever.";
-                } else {
-                    img.src = "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png";
-                    txt.innerHTML = "Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget.";
-                }
-                img.style.opacity = '1'; // تأثير ظهور
-            }, 500);
-            
-            event.stopPropagation(); // لمنع إغلاق الظرف تلقائياً
+        function startCountdown() {
+            const target = new Date("June 16, 2026 00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+            }, 1000);
         }
 
-        // دالة إنشاء القلوب المتطايرة
+        function nextStage(n) {
+            const txt = document.getElementById('txt' + n);
+            const extraMsgs = [
+                "You turned ordinary days into moments that feel beautifully meant to be.",
+                "You brought warmth into parts of me I didn't even know were cold.",
+                "One picture from you can brighten my whole world in a second. I love you!",
+                "Our messages might travel through wires, but every word stays in my heart."
+            ];
+            txt.innerHTML = extraMsgs[n-1];
+        }
+
         function initHearts() {
             setInterval(() => {
                 const h = document.createElement('div');
@@ -259,20 +248,11 @@
             }, 300);
         }
 
-        // دالة التحكم في الأغنية
         let playing = false;
         function toggleMusic() {
-            const player = document.getElementById('player');
             const btn = document.querySelector('.music-btn');
-            if (!playing) {
-                player.src += "&autoplay=1";
-                btn.innerHTML = "⏸️ إيقاف الأغنية";
-                playing = true;
-            } else {
-                player.src = "https://www.youtube.com/embed/5F-0h_2S7eQ?enablejsapi=1";
-                btn.innerHTML = "🎵 تشغيل الأغنية";
-                playing = false;
-            }
+            if (!playing) { player.playVideo(); btn.innerHTML = "⏸️ إيقاف"; playing = true; }
+            else { player.pauseVideo(); btn.innerHTML = "🎵 تشغيل"; playing = false; }
         }
     </script>
 </body>
