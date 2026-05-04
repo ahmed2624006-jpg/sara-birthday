@@ -31,7 +31,7 @@
         .countdown-container { background: white; padding: 10px 20px; border-radius: 15px; width: fit-content; margin: 0 auto 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
         #countdown { font-size: 1.4rem; color: var(--primary-pink); font-weight: bold; }
 
-        /* كرت الكشط المطور */
+        /* كرت الكشط */
         .scratch-container {
             position: relative; width: 95%; max-width: 650px; min-height: 380px;
             margin: 25px auto; background: white; border-radius: 20px;
@@ -40,7 +40,6 @@
         }
         #scratch-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 5; border-radius: 20px; }
         
-        /* محتوى الميموري (الصورة + الرسالة جنب بعض) */
         .memory-content {
             display: none; padding: 30px; opacity: 0; transition: 1s;
             flex-direction: row; align-items: center; justify-content: center; gap: 25px;
@@ -49,45 +48,36 @@
         .memory-photo { width: 160px; height: 160px; object-fit: cover; border-radius: 20px; border: 4px solid var(--light-pink); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .memory-text { flex: 1; color: var(--dark-pink); font-weight: bold; font-size: 15px; line-height: 1.8; text-align: right; }
 
-        /* فقاعات الكلام (وضحناها جداً) */
+        /* الفقاعات واضحة جداً */
         .bubble {
             position: fixed; bottom: -120px; 
-            background: rgba(255, 255, 255, 0.95); /* لون أبيض واضح */
+            background: rgba(255, 255, 255, 0.98);
             border-radius: 50px; padding: 12px 25px; 
-            color: var(--primary-pink); /* خط وردي غامق وواضح */
-            font-weight: bold; font-size: 15px; /* خط أكبر */
-            z-index: 1; animation: floatUp 15s linear forwards;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* ظل أوضح */
-            border: 2px solid var(--primary-pink); /* تحديد أوضح */
+            color: var(--primary-pink);
+            font-weight: bold; font-size: 15px;
+            z-index: 100; animation: floatUp 15s linear forwards;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            border: 2px solid var(--primary-pink);
             white-space: nowrap;
         }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-130vh) translateX(40px); opacity: 0; } }
 
-        /* الأظرف (رجعناهم كبار ورجعنا الكلام) */
+        /* الأظرف */
         .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 30px; margin-top: 40px; }
         .envelope-wrapper { position: relative; width: 280px; height: 180px; margin-bottom: 120px; }
-        
         .envelope { position: relative; width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; cursor: pointer; z-index: 2; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .flap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); transition: 0.6s; z-index: 3; transform-origin: top; }
-        
-        .letter { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 93%; height: 93%; background: white; z-index: 1; transition: 0.6s; display: flex; flex-direction: column; align-items: center; padding: 12px; overflow: hidden; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .letter { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 93%; height: 93%; background: white; z-index: 1; transition: 0.6s; display: flex; flex-direction: column; align-items: center; padding: 12px; overflow: hidden; border-radius: 5px; }
         .letter img { width: 100%; height: 110px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
-        
         .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
         .envelope-wrapper.open .letter { transform: translateX(-50%) translateY(-160px); height: 320px; z-index: 4; }
-        
-        /* الرسايل العربي والإنجليزي في الأظرف */
-        .ar-msg-main { font-size: 14px; font-weight: bold; color: var(--dark-pink); margin-top: 5px; }
-        .en-msg-main { opacity: 0; transition: 0.4s; color: #555; font-size: 11px; font-style: italic; text-align: center; line-height: 1.5; margin-top: 10px; padding: 0 5px; }
+        .en-msg-main { opacity: 0; transition: 0.4s; color: #444; font-size: 12px; font-style: italic; text-align: center; line-height: 1.5; margin-top: 10px; }
         .envelope-wrapper.open .en-msg-main { opacity: 1; }
-
-        /* رسايل العربي تحت الظرف من بره */
         .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; text-align: center; }
 
         @media (max-width: 600px) {
-            .memory-content { flex-direction: column; text-align: center; padding: 20px; }
-            .memory-text { text-align: center; font-size: 14px; min-width: 100%; }
-            .memory-photo { width: 130px; height: 130px; }
+            .memory-content { flex-direction: column; text-align: center; }
+            .memory-text { text-align: center; font-size: 14px; }
             .envelope-wrapper { width: 90%; max-width: 320px; height: 200px; }
         }
     </style>
@@ -98,7 +88,6 @@
 
     <div id="music-gate">
         <h2 style="font-family:'Pacifico'; font-size: 2.8rem;">Sarsora's World ❤️🪐</h2>
-        <p style="font-size: 1.2rem; margin-top: 10px;">اضغطي هنا عشان تبدأ المفاجأة</p>
         <button class="start-btn" onclick="startEverything()">شغلي المفاجأة ✨</button>
     </div>
 
@@ -119,7 +108,7 @@
             <div class="memory-content" id="memory-box">
                 <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png" class="memory-photo">
                 <div class="memory-text">
-                    اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐❤️🪐❤️🪐
+                    اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐
                 </div>
             </div>
         </div>
@@ -177,7 +166,7 @@
                         <p class="en-msg-main">"Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever."</p>
                     </div>
                 </div>
-                <span class="outer-ar-msg">أغلى سارسورة في الكوكب ❤️🪐</span>
+                <span class="outer-ar-msg">أغلى سارسورة في الدنيا ❤️🪐</span>
             </div>
 
             <div class="envelope-wrapper">
@@ -188,7 +177,7 @@
                         <p class="en-msg-main">"You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark."</p>
                     </div>
                 </div>
-                <span class="outer-ar-msg">يا روح قلبي من جوه ❤️🪐</span>
+                <span class="outer-ar-msg">أقرب واحدة لقلبي ❤️🪐</span>
             </div>
         </div>
     </div>
@@ -197,7 +186,7 @@
         const audio = document.getElementById('bgMusic');
 
         function startEverything() {
-            audio.play().catch(e => console.log("Audio Init"));
+            audio.play();
             document.getElementById('music-gate').style.display = 'none';
             document.getElementById('password-screen').style.display = 'flex';
         }
@@ -207,10 +196,9 @@
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 startCountdown();
-                // الفقاعات كل 5 ثواني
                 setInterval(createBubble, 5000); 
                 initScratch();
-            } else { alert('الباسورد غلط يا روحي ❤️🪐'); }
+            } else { alert('الباسورد غلط يا روحي ❤️'); }
         }
 
         function initScratch() {
@@ -218,11 +206,9 @@
             const ctx = canvas.getContext('2d');
             canvas.width = canvas.parentElement.offsetWidth;
             canvas.height = canvas.parentElement.offsetHeight;
-            
-            ctx.fillStyle = '#fdd835'; // ذهبي
+            ctx.fillStyle = '#fdd835';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#d81b60';
-            ctx.font = 'bold 22px Cairo'; ctx.textAlign = 'center';
+            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 20px Cairo'; ctx.textAlign = 'center';
             ctx.fillText('امسحي صورتنا هنا يروحي ❤️🪐', canvas.width/2, canvas.height/2);
 
             let isDrawing = false;
@@ -237,7 +223,7 @@
                 const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                 let clear = 0;
                 for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
-                if(clear/(pixels.length/4) > 0.5) {
+                if(clear/(pixels.length/4) > 0.45) {
                     canvas.style.opacity = '0';
                     setTimeout(() => { 
                         canvas.style.display = 'none';
@@ -256,7 +242,6 @@
             b.className = 'bubble';
             b.innerHTML = words[Math.floor(Math.random()*words.length)];
             b.style.left = (Math.random()*70 + 15) + 'vw';
-            b.style.animationDuration = (Math.random()*5 + 12) + 's';
             document.body.appendChild(b);
             setTimeout(() => b.remove(), 15000);
         }
@@ -264,13 +249,12 @@
         function startCountdown() {
             const target = new Date("June 16, 2026 00:00:00").getTime();
             setInterval(() => {
-                const now = new Date().getTime();
-                const diff = target - now;
+                const diff = target - new Date().getTime();
                 const d = Math.floor(diff/86400000);
                 const h = Math.floor((diff%86400000)/3600000);
                 const m = Math.floor((diff%3600000)/60000);
                 const s = Math.floor((diff%60000)/1000);
-                document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s `;
+                document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
             }, 1000);
         }
     </script>
