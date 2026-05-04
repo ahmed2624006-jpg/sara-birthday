@@ -10,14 +10,14 @@
             --primary-pink: #d81b60; 
             --light-pink: #ffe4ec; 
             --dark-pink: #ad1457; 
-            --book-bg: #fff0f5; /* لون خلفية صفحات الكتاب */
+            --book-bg: #fff0f5; 
             --white: #ffffff; 
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--light-pink); overflow-x: hidden; min-height: 100vh; user-select: none; }
 
-        /* 1. شاشة البداية بتدرج لوني متحرك (روقتلك الدنيا هنا) */
+        /* شاشة البداية بتدرج لوني متحرك */
         #music-gate {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(45deg, #ad1457, #d81b60, #f48fb1);
@@ -27,100 +27,85 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; padding: 20px;
         }
-
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* 2. شاشة الباسورد مع القلوب */
+        /* شاشة الباسورد */
         #password-screen { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); display: none; z-index: 8000; overflow: hidden;
             flex-direction: column; justify-content: center; align-items: center;
         }
-
         .login-box {
             position: relative; z-index: 10; background: rgba(255, 255, 255, 0.95);
             padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(216, 27, 96, 0.2);
             border: 2px solid var(--light-pink); width: 90%; max-width: 400px;
         }
-
         .bg-heart {
             position: absolute; color: var(--light-pink); font-size: 20px;
             pointer-events: none; animation: fall linear infinite; z-index: 1;
         }
-
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
         .start-btn {
             background: white; color: var(--primary-pink); border: none; padding: 18px 45px; 
             border-radius: 50px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s;
         }
-        .start-btn:hover { transform: scale(1.05); }
 
-        .login-box button { background: var(--primary-pink); color: white; width: 100%; border-radius: 12px; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 18px; }
+        .login-box button { background: var(--primary-pink); color: white; width: 100%; border-radius: 12px; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 12px; width: 100%; text-align: center; margin-bottom: 10px; outline: none; font-size: 18px; }
 
-        /* 3. المحتوى الرئيسي */
+        /* المحتوى الرئيسي */
         #main-content { display: none; padding-bottom: 50px; text-align: center; }
         header h1 { font-family: 'Pacifico'; font-size: 2.2rem; color: var(--primary-pink); padding: 25px; }
 
-        /* العداد */
-        .countdown-section { background: white; padding: 25px; border-radius: 30px; width: fit-content; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(216, 27, 96, 0.15); border: 2px solid var(--primary-pink); }
-        .countdown-label { font-family: 'Pacifico', cursive; font-size: 2rem; color: var(--dark-pink); margin-bottom: 5px; display: block; }
-        .birth-date { font-size: 1.1rem; color: #888; font-weight: bold; margin-bottom: 15px; display: block; letter-spacing: 1px; }
-        #countdown { font-size: 1.8rem; color: var(--primary-pink); font-weight: 700; font-family: sans-serif; letter-spacing: 2px; border-top: 1px solid #eee; padding-top: 10px; }
-
-        /* كارت الكشط */
+        /* العداد وكارت الكشط */
+        .countdown-section { background: white; padding: 25px; border-radius: 30px; width: fit-content; margin: 0 auto 30px; border: 2px solid var(--primary-pink); }
+        #countdown { font-size: 1.8rem; color: var(--primary-pink); font-weight: 700; font-family: sans-serif; letter-spacing: 2px; }
         .scratch-box { width: 95%; max-width: 650px; margin: 20px auto; background: white; border-radius: 20px; position: relative; min-height: 300px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; cursor: crosshair; }
         .scratch-content { padding: 30px; display: flex; align-items: center; gap: 20px; text-align: right; opacity: 0; transition: 1s; }
         .scratch-content.visible { opacity: 1; }
-        .scratch-content img { width: 150px; height: 150px; object-fit: cover; border-radius: 15px; border: 4px solid var(--light-pink); }
-        .scratch-content p { font-size: 15px; font-weight: bold; color: var(--dark-pink); line-height: 1.8; flex: 1; }
+        .scratch-content img { width: 150px; height: 150px; object-fit: cover; border-radius: 15px; }
 
-        /* الأظرف */
+        /* حاوية الأظرف */
         .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 20px; margin-top: 20px; }
-        .envelope-wrapper { width: 220px; height: 150px; position: relative; cursor: pointer; transition: 0.3s; }
-        .envelope-img { width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .envelope-wrapper { 
+            width: 220px; 
+            height: 150px; 
+            position: relative; 
+            cursor: pointer; 
+            transition: 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 50; /* لضمان قابلية الضغط */
+        }
+        .envelope-img { width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); pointer-events: none; }
         .envelope-img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); }
-        .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
+        .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; pointer-events: none; }
 
-        /* 4. ميكانيزم الكتاب المطور */
-        .book-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 15px; }
+        /* مودال الكتاب */
+        .book-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); padding: 15px; }
         .book-container { 
             width: 95%; max-width: 900px; height: 500px; 
             background: var(--book-bg); border-radius: 15px; display: flex; overflow: hidden; 
-            box-shadow: 0 30px 70px rgba(0,0,0,0.5); animation: openBook 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67); 
-            position: relative; border: 10px solid white;
+            position: relative; border: 8px solid white; animation: openBook 0.5s ease-out;
         }
-        
-        .book-left { flex: 1.3; padding: 45px; display: flex; flex-direction: column; justify-content: center; text-align: left; background: var(--book-bg); border-right: 1px solid rgba(216, 27, 96, 0.1); }
-        .book-left p { 
-            font-family: 'Playfair Display', serif; /* الخط الإنجليزي المطلوب */
-            font-size: 1.5rem; color: var(--dark-pink); font-style: italic; line-height: 1.7; 
-        }
-
+        .book-left { flex: 1.3; padding: 30px; display: flex; flex-direction: column; justify-content: center; text-align: left; background: var(--book-bg); border-right: 1px solid rgba(216, 27, 96, 0.1); }
+        .book-left p { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--dark-pink); font-style: italic; line-height: 1.7; }
         .book-right { flex: 1; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .book-right img { width: 95%; height: 85%; object-fit: cover; border-radius: 12px; border: 6px solid var(--light-pink); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 15px; font-size: 1.6rem; }
-        
-        .close-book { position: absolute; top: 15px; right: 20px; font-size: 35px; color: var(--primary-pink); cursor: pointer; z-index: 11; font-weight: bold; text-shadow: 0 0 5px white;}
+        .book-right img { width: 90%; height: 80%; object-fit: cover; border-radius: 10px; border: 5px solid var(--light-pink); }
+        .close-book { position: absolute; top: 15px; right: 20px; font-size: 35px; color: var(--primary-pink); cursor: pointer; z-index: 11; font-weight: bold; }
 
-        /* الفقاعات */
-        .bubble { position: fixed; bottom: -100px; background: rgba(255,255,255,0.85); padding: 12px 25px; border-radius: 50px; color: var(--primary-pink); font-weight: bold; z-index: 1; animation: floatUp 7s linear forwards; border: 1px solid rgba(216, 27, 96, 0.3); white-space: nowrap; font-size: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-125vh); opacity: 0; } }
-        @keyframes openBook { from { transform: rotateY(-20deg) scale(0.8); opacity: 0; } to { transform: rotateY(0deg) scale(1); opacity: 1; } }
+        @keyframes openBook { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         @media (max-width: 768px) {
-            .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; }
-            .book-left { padding: 30px; text-align: center; }
-            .book-left p { font-size: 1.2rem; }
+            .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; overflow-y: auto; }
+            .book-left { padding: 20px; text-align: center; }
             .book-right img { height: 250px; }
+            .envelope-wrapper { width: 170px; height: 120px; }
         }
     </style>
 </head>
@@ -129,13 +114,13 @@
     <audio id="bgMusic" loop><source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg"></audio>
 
     <div id="music-gate">
-        <h2 style="font-family:'Pacifico'; font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.2);">Sarsora's World ❤️🪐</h2>
+        <h2 style="font-family:'Pacifico'; font-size: 3rem; color:white;">Sarsora's World ❤️🪐</h2>
         <button class="start-btn" onclick="startEverything()">خشي برجلك اليمين يا هاها ❤️</button>
     </div>
 
     <div id="password-screen">
         <div class="login-box">
-            <h2 style="font-family:'Pacifico'; color:var(--primary-pink); font-size: 2.2rem; margin-bottom: 20px;">كلمة السر ❤️</h2>
+            <h2 style="font-family:'Pacifico'; color:var(--primary-pink); font-size: 2rem; margin-bottom: 20px;">كلمة السر ❤️</h2>
             <input type="password" id="passInput" placeholder="اكتبي الباسورد هنا">
             <button onclick="checkPassword()">دخول ✨</button>
         </div>
@@ -143,10 +128,8 @@
 
     <div id="main-content">
         <header><h1>Happy Birthday Sarsora 💖🪐</h1></header>
-        
         <div class="countdown-section">
-            <span class="countdown-label">Days Left Sarsora ❤️</span>
-            <span class="birth-date">My Soulmate's Birthday: 16/6/2009</span>
+            <span class="countdown-label" style="font-family:'Pacifico'; color:var(--dark-pink); font-size:1.8rem;">Days Left ❤️</span><br>
             <span id="countdown">00:00:00:00</span>
         </div>
 
@@ -154,7 +137,7 @@
             <canvas id="scratch-canvas"></canvas>
             <div class="scratch-content" id="scratchResult">
                 <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
-                <p>اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐</p>
+                <p>اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض.. بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐</p>
             </div>
         </div>
 
@@ -164,72 +147,42 @@
     <div class="book-overlay" id="bookOverlay">
         <div class="book-container">
             <span class="close-book" onclick="closeBook()">&times;</span>
-            <div class="book-left">
-                <p id="bookText"></p>
-            </div>
+            <div class="book-left"><p id="bookText"></p></div>
             <div class="book-right">
                 <img id="bookImg" src="">
-                <h2 id="bookCaption">Happy Birthday ✨</h2>
+                <h2 style="font-family:'Pacifico'; color:var(--primary-pink); margin-top:10px;">Happy Birthday ✨</h2>
             </div>
         </div>
     </div>
 
     <script>
-        // البيانات الصور والكلام (نفس الروابط والترتيب)
         const data = [
-            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be.", ar: "بحبك يا روحي ❤️🪐", caption: "Together Forever" },
-            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light.", ar: "ربنا يخليكي ليا يا نن عيني ❤️🪐", caption: "Universe's Gift" },
-            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget.", ar: "كل سنه واحنا مع بعض يقلبي ❤️🪐", caption: "Our Moments" },
-            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world.", ar: "بجد مش عارف من غيرك كنت هبقى فين ❤️🪐", caption: "My Happiness" },
-            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever.", ar: "أغلى سارسورة في الدنيا ❤️🪐", caption: "Soulmate" },
-            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark.", ar: "أقرب واحدة لقلبي ❤️🪐", caption: "Always With You" }
+            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be.", ar: "بحبك يا روحي ❤️🪐" },
+            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light.", ar: "ربنا يخليكي ليا يا نن عيني ❤️🪐" },
+            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget.", ar: "كل سنه واحنا مع بعض يقلبي ❤️🪐" },
+            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world.", ar: "بجد مش عارف من غيرك كنت هبقى فين ❤️🪐" },
+            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever.", ar: "أغلى سارسورة في الدنيا ❤️🪐" },
+            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark.", ar: "أقرب واحدة لقلبي ❤️🪐" }
         ];
-
-        // إنشاء قلوب متساقطة لشاشة الباسورد
-        function createBGHearts() {
-            const screen = document.getElementById('password-screen');
-            for(let i=0; i<25; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'bg-heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = '-10vh';
-                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                heart.style.opacity = Math.random() * 0.5 + 0.2;
-                screen.appendChild(heart);
-            }
-        }
 
         function startEverything() {
             document.getElementById('bgMusic').play();
             document.getElementById('music-gate').style.display = 'none';
             document.getElementById('password-screen').style.display = 'flex';
-            createBGHearts();
+            for(let i=0; i<20; i++) {
+                const h = document.createElement('div');
+                h.className = 'bg-heart'; h.innerHTML = '❤️';
+                h.style.left = Math.random()*100+'vw'; h.style.animationDuration = (Math.random()*3+2)+'s';
+                document.getElementById('password-screen').appendChild(h);
+            }
         }
 
         function checkPassword() {
             if (document.getElementById('passInput').value.toLowerCase().trim() === 'i love you') {
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                renderEnvelopes();
-                initScratch();
-                startCountdown();
-                setInterval(createBubble, 3000);
-            } else { 
-                alert('غلط يا روحي ❤️'); 
-            }
-        }
-
-        function startCountdown() {
-            const target = new Date("June 16, 2026 00:00:00").getTime();
-            setInterval(() => {
-                const diff = target - new Date().getTime();
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                const s = Math.floor((diff % 60000) / 1000);
-                document.getElementById("countdown").innerHTML = `${d}D : ${h}H : ${m}M : ${s}S`;
-            }, 1000);
+                renderEnvelopes(); initScratch(); startCountdown();
+            } else { alert('غلط يا روحي ❤️'); }
         }
 
         function renderEnvelopes() {
@@ -238,7 +191,15 @@
                 const div = document.createElement('div');
                 div.className = 'envelope-wrapper';
                 div.innerHTML = `<div class="envelope-img"></div><span class="outer-ar-msg">${item.ar}</span>`;
-                div.onclick = () => openBook(index);
+                
+                // إضافة أحداث الضغط للكمبيوتر والموبايل معاً
+                div.addEventListener('click', () => openBook(index));
+                div.addEventListener('touchend', (e) => {
+                    // منع تنفيذ الكليك العادي إذا اشتغل التاتش لضمان السرعة
+                    e.preventDefault(); 
+                    openBook(index);
+                });
+
                 container.appendChild(div);
             });
         }
@@ -246,57 +207,52 @@
         function openBook(index) {
             document.getElementById('bookImg').src = data[index].img;
             document.getElementById('bookText').innerText = data[index].en;
-            document.getElementById('bookCaption').innerText = data[index].caption;
             document.getElementById('bookOverlay').style.display = 'flex';
         }
 
         function closeBook() { document.getElementById('bookOverlay').style.display = 'none'; }
 
+        function startCountdown() {
+            const target = new Date("June 16, 2026 00:00:00").getTime();
+            setInterval(() => {
+                const diff = target - new Date().getTime();
+                const d = Math.floor(diff/86400000); const h = Math.floor((diff%86400000)/3600000);
+                const m = Math.floor((diff%3600000)/60000); const s = Math.floor((diff%60000)/1000);
+                document.getElementById("countdown").innerHTML = `${d}D : ${h}H : ${m}M : ${s}S`;
+            }, 1000);
+        }
+
         function initScratch() {
             const canvas = document.getElementById('scratch-canvas');
             const ctx = canvas.getContext('2d');
-            const box = document.querySelector('.scratch-box');
-            canvas.width = box.offsetWidth;
-            canvas.height = box.offsetHeight;
-            ctx.fillStyle = '#fdd835';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 22px Cairo'; ctx.textAlign = 'center';
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+            ctx.fillStyle = '#fdd835'; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 20px Cairo'; ctx.textAlign = 'center';
             ctx.fillText('خربشي الكارت يروحي ❤️🪐', canvas.width/2, canvas.height/2);
 
-            let drawing = false;
-            const start = () => drawing = true;
-            const end = () => drawing = false;
-            
-            canvas.onmousedown = canvas.ontouchstart = start;
-            window.onmouseup = window.ontouchend = end;
-            
-            canvas.onmousemove = canvas.ontouchmove = (e) => {
-                if(!drawing) return;
-                e.preventDefault();
-                const rect = canvas.getBoundingClientRect();
-                const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-                const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+            const scratch = (x, y) => {
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI*2); ctx.fill();
-                
+                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI*2); ctx.fill();
                 const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                 let clear = 0;
                 for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
-                if(clear/(pixels.length/4) > 0.45) {
+                if(clear/(pixels.length/4) > 0.4) {
                     canvas.style.display = 'none';
                     document.getElementById('scratchResult').classList.add('visible');
                 }
             };
-        }
 
-        function createBubble() {
-            const words = ['بحبك اوي ❤️🪐', 'أغلى سارسورة', 'يا نصيبي يقمري', 'أنتي كوني كله ✨', 'سارسورة قلبي', 'كل سنة وانتي طيبة'];
-            const b = document.createElement('div');
-            b.className = 'bubble';
-            b.innerText = words[Math.floor(Math.random()*words.length)];
-            b.style.left = Math.random()*75 + 10 + 'vw';
-            document.body.appendChild(b);
-            setTimeout(() => b.remove(), 7000);
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                scratch(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            });
+            canvas.addEventListener('mousemove', (e) => {
+                if(e.buttons !== 1) return;
+                const rect = canvas.getBoundingClientRect();
+                scratch(e.clientX - rect.left, e.clientY - rect.top);
+            });
         }
     </script>
 </body>
