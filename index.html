@@ -10,62 +10,61 @@
             --primary-pink: #d81b60; 
             --light-pink: #ffe4ec; 
             --dark-pink: #ad1457; 
-            --book-bg: #fff0f5; 
+            --book-bg: #fff0f5; /* لون خلفية صفحات الكتاب */
             --white: #ffffff; 
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--light-pink); overflow-x: hidden; min-height: 100vh; user-select: none; }
 
-        /* شاشات الدخول */
-        #music-gate, #password-screen {
+        /* 1. شاشة البداية بتدرج لوني متحرك (روقتلك الدنيا هنا) */
+        #music-gate {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary-pink); z-index: 9000;
+            background: linear-gradient(45deg, #ad1457, #d81b60, #f48fb1);
+            background-size: 200% 200%;
+            animation: gradientBG 5s ease infinite;
+            z-index: 9000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; padding: 20px;
         }
-        
-        /* شاشة الباسورد مع القلوب */
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. شاشة الباسورد مع القلوب */
         #password-screen { 
-            background: var(--white); 
-            display: none; 
-            z-index: 8000; 
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white); display: none; z-index: 8000; overflow: hidden;
+            flex-direction: column; justify-content: center; align-items: center;
         }
 
         .login-box {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(216, 27, 96, 0.2);
-            border: 2px solid var(--light-pink);
+            position: relative; z-index: 10; background: rgba(255, 255, 255, 0.95);
+            padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(216, 27, 96, 0.2);
+            border: 2px solid var(--light-pink); width: 90%; max-width: 400px;
         }
 
-        /* قلوب الخلفية لشاشة الباسورد */
         .bg-heart {
-            position: absolute;
-            color: var(--light-pink);
-            font-size: 20px;
-            pointer-events: none;
-            animation: fall linear infinite;
-            z-index: 1;
+            position: absolute; color: var(--light-pink); font-size: 20px;
+            pointer-events: none; animation: fall linear infinite; z-index: 1;
         }
 
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
         .start-btn {
             background: white; color: var(--primary-pink); border: none; padding: 18px 45px; 
             border-radius: 50px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s;
         }
+        .start-btn:hover { transform: scale(1.05); }
 
-        .login-box button { background: var(--primary-pink); color: white; width: 100%; border-radius: 10px; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 10px; width: 100%; text-align: center; margin-bottom: 10px; outline: none; font-size: 16px; }
+        .login-box button { background: var(--primary-pink); color: white; width: 100%; border-radius: 12px; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 18px; }
+        .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 12px; width: 100%; text-align: center; margin-bottom: 10px; outline: none; font-size: 18px; }
 
+        /* 3. المحتوى الرئيسي */
         #main-content { display: none; padding-bottom: 50px; text-align: center; }
         header h1 { font-family: 'Pacifico'; font-size: 2.2rem; color: var(--primary-pink); padding: 25px; }
 
@@ -90,30 +89,37 @@
         .envelope-img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); }
         .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
 
-        /* نظام الكتاب */
-        .book-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 10px; }
+        /* 4. ميكانيزم الكتاب المطور */
+        .book-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 15px; }
         .book-container { 
-            width: 95%; max-width: 850px; height: 500px; 
+            width: 95%; max-width: 900px; height: 500px; 
             background: var(--book-bg); border-radius: 15px; display: flex; overflow: hidden; 
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4); animation: openBook 0.5s ease-out; position: relative; 
-            border: 8px solid white;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.5); animation: openBook 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67); 
+            position: relative; border: 10px solid white;
         }
-        .book-left { flex: 1.2; padding: 40px; display: flex; flex-direction: column; justify-content: center; text-align: left; background: var(--book-bg); border-right: 1px solid rgba(216, 27, 96, 0.1); }
-        .book-left p { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--dark-pink); font-style: italic; line-height: 1.6; }
+        
+        .book-left { flex: 1.3; padding: 45px; display: flex; flex-direction: column; justify-content: center; text-align: left; background: var(--book-bg); border-right: 1px solid rgba(216, 27, 96, 0.1); }
+        .book-left p { 
+            font-family: 'Playfair Display', serif; /* الخط الإنجليزي المطلوب */
+            font-size: 1.5rem; color: var(--dark-pink); font-style: italic; line-height: 1.7; 
+        }
+
         .book-right { flex: 1; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .book-right img { width: 90%; height: 80%; object-fit: cover; border-radius: 10px; border: 5px solid var(--light-pink); }
-        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 15px; font-size: 1.5rem; }
-        .close-book { position: absolute; top: 10px; right: 15px; font-size: 30px; color: var(--primary-pink); cursor: pointer; z-index: 10; font-weight: bold;}
+        .book-right img { width: 95%; height: 85%; object-fit: cover; border-radius: 12px; border: 6px solid var(--light-pink); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 15px; font-size: 1.6rem; }
+        
+        .close-book { position: absolute; top: 15px; right: 20px; font-size: 35px; color: var(--primary-pink); cursor: pointer; z-index: 11; font-weight: bold; text-shadow: 0 0 5px white;}
 
         /* الفقاعات */
-        .bubble { position: fixed; bottom: -100px; background: rgba(255,255,255,0.75); padding: 10px 22px; border-radius: 50px; color: var(--primary-pink); font-weight: bold; z-index: 1; animation: floatUp 7s linear forwards; border: 1px solid rgba(216, 27, 96, 0.3); white-space: nowrap; font-size: 14px; }
+        .bubble { position: fixed; bottom: -100px; background: rgba(255,255,255,0.85); padding: 12px 25px; border-radius: 50px; color: var(--primary-pink); font-weight: bold; z-index: 1; animation: floatUp 7s linear forwards; border: 1px solid rgba(216, 27, 96, 0.3); white-space: nowrap; font-size: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-125vh); opacity: 0; } }
-
-        @keyframes openBook { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes openBook { from { transform: rotateY(-20deg) scale(0.8); opacity: 0; } to { transform: rotateY(0deg) scale(1); opacity: 1; } }
 
         @media (max-width: 768px) {
             .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; }
-            .book-left { padding: 25px; text-align: center; }
+            .book-left { padding: 30px; text-align: center; }
+            .book-left p { font-size: 1.2rem; }
             .book-right img { height: 250px; }
         }
     </style>
@@ -123,13 +129,13 @@
     <audio id="bgMusic" loop><source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg"></audio>
 
     <div id="music-gate">
-        <h2 style="font-family:'Pacifico'; font-size: 2.8rem;">Sarsora's World ❤️🪐</h2>
+        <h2 style="font-family:'Pacifico'; font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.2);">Sarsora's World ❤️🪐</h2>
         <button class="start-btn" onclick="startEverything()">خشي برجلك اليمين يا هاها ❤️</button>
     </div>
 
     <div id="password-screen">
         <div class="login-box">
-            <h2 style="font-family:'Pacifico'; color:var(--primary-pink); font-size: 2rem; margin-bottom: 15px;">كلمة السر ❤️</h2>
+            <h2 style="font-family:'Pacifico'; color:var(--primary-pink); font-size: 2.2rem; margin-bottom: 20px;">كلمة السر ❤️</h2>
             <input type="password" id="passInput" placeholder="اكتبي الباسورد هنا">
             <button onclick="checkPassword()">دخول ✨</button>
         </div>
@@ -158,7 +164,9 @@
     <div class="book-overlay" id="bookOverlay">
         <div class="book-container">
             <span class="close-book" onclick="closeBook()">&times;</span>
-            <div class="book-left"><p id="bookText"></p></div>
+            <div class="book-left">
+                <p id="bookText"></p>
+            </div>
             <div class="book-right">
                 <img id="bookImg" src="">
                 <h2 id="bookCaption">Happy Birthday ✨</h2>
@@ -167,6 +175,7 @@
     </div>
 
     <script>
+        // البيانات الصور والكلام (نفس الروابط والترتيب)
         const data = [
             { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be.", ar: "بحبك يا روحي ❤️🪐", caption: "Together Forever" },
             { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light.", ar: "ربنا يخليكي ليا يا نن عيني ❤️🪐", caption: "Universe's Gift" },
@@ -176,16 +185,17 @@
             { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark.", ar: "أقرب واحدة لقلبي ❤️🪐", caption: "Always With You" }
         ];
 
+        // إنشاء قلوب متساقطة لشاشة الباسورد
         function createBGHearts() {
             const screen = document.getElementById('password-screen');
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<25; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'bg-heart';
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.top = '-10vh';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                heart.style.opacity = Math.random();
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                heart.style.opacity = Math.random() * 0.5 + 0.2;
                 screen.appendChild(heart);
             }
         }
@@ -250,23 +260,29 @@
             canvas.height = box.offsetHeight;
             ctx.fillStyle = '#fdd835';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 20px Cairo'; ctx.textAlign = 'center';
+            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 22px Cairo'; ctx.textAlign = 'center';
             ctx.fillText('خربشي الكارت يروحي ❤️🪐', canvas.width/2, canvas.height/2);
 
             let drawing = false;
-            canvas.onmousedown = canvas.ontouchstart = () => drawing = true;
-            window.onmouseup = window.ontouchend = () => drawing = false;
+            const start = () => drawing = true;
+            const end = () => drawing = false;
+            
+            canvas.onmousedown = canvas.ontouchstart = start;
+            window.onmouseup = window.ontouchend = end;
+            
             canvas.onmousemove = canvas.ontouchmove = (e) => {
                 if(!drawing) return;
+                e.preventDefault();
                 const rect = canvas.getBoundingClientRect();
                 const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
                 const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI*2); ctx.fill();
+                
                 const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                 let clear = 0;
                 for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
-                if(clear/(pixels.length/4) > 0.4) {
+                if(clear/(pixels.length/4) > 0.45) {
                     canvas.style.display = 'none';
                     document.getElementById('scratchResult').classList.add('visible');
                 }
