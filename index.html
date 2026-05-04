@@ -48,19 +48,19 @@
         .memory-photo { width: 160px; height: 160px; object-fit: cover; border-radius: 20px; border: 4px solid var(--light-pink); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .memory-text { flex: 1; color: var(--dark-pink); font-weight: bold; font-size: 15px; line-height: 1.8; text-align: right; }
 
-        /* فقاعات الكلام (تعديل: خفيفة وشفافة) */
+        /* فقاعات الكلام (تعديل: سرعة أكبر) */
         .bubble {
             position: fixed; bottom: -120px; 
-            background: rgba(255, 255, 255, 0.6); /* شفافة أكتر */
+            background: rgba(255, 255, 255, 0.7); 
             border-radius: 50px; padding: 10px 20px; 
             color: var(--primary-pink);
             font-weight: bold; font-size: 14px;
-            z-index: 1; animation: floatUp 18s linear forwards; /* أبطأ */
+            z-index: 1; animation: floatUp 8s linear forwards; /* سرعة طيران أكبر */
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border: 1px solid rgba(216, 27, 96, 0.3);
             white-space: nowrap;
         }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-130vh) translateX(30px); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-130vh) translateX(40px); opacity: 0; } }
 
         /* الأظرف */
         .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 30px; margin-top: 40px; }
@@ -100,7 +100,7 @@
     </div>
 
     <div id="main-content">
-        <header><h1>Happy Birthday Sarsora 💖🪐</h1></header>
+        <header><h1>Happy Birthday Sarsora 💖</h1></header>
         <div class="countdown-container"><span id="countdown">00:00:00:00</span></div>
 
         <div class="scratch-container">
@@ -196,8 +196,8 @@
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 startCountdown();
-                // الفقاعات كل 8 ثواني لتقليل الزحمة
-                setInterval(createBubble, 8000); 
+                // ظهور الفقاعات كل 3 ثواني (أسرع)
+                setInterval(createBubble, 3000); 
                 initScratch();
             } else { alert('الباسورد غلط يا روحي ❤️'); }
         }
@@ -238,13 +238,13 @@
         }
 
         function createBubble() {
-            const words = ['بحبك اوي ❤️🪐', 'أغلى سارسورة', 'يا نصيبي يقمري', 'أنتي كوني كله ✨', 'سارسورة قلبي'];
+            const words = ['بحبك اوي ❤️🪐', 'أغلى سارسورة', 'يا نصيبي يقمري', 'أنتي كوني كله ✨', 'سارسورة قلبي', 'كل سنة وانتي طيبة'];
             const b = document.createElement('div');
             b.className = 'bubble';
             b.innerHTML = words[Math.floor(Math.random()*words.length)];
             b.style.left = (Math.random()*70 + 15) + 'vw';
             document.body.appendChild(b);
-            setTimeout(() => b.remove(), 18000);
+            setTimeout(() => b.remove(), 8000); // إزالة الفقاعة أسرع
         }
 
         function startCountdown() {
