@@ -10,176 +10,111 @@
         * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--light-pink); overflow-x: hidden; min-height: 100vh; user-select: none; }
 
-        /* شاشة البداية لتفعيل الصوت */
-        #music-gate {
+        /* شاشات الدخول */
+        #music-gate, #password-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--primary-pink); z-index: 3000;
+            background: var(--primary-pink); z-index: 4000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; padding: 20px;
         }
-        .start-btn {
+        #password-screen { background: var(--white); display: none; z-index: 3000; }
+        .start-btn, .login-box button {
             background: white; color: var(--primary-pink); border: none;
             padding: 15px 40px; border-radius: 50px; font-size: 18px; font-weight: bold;
-            cursor: pointer; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            cursor: pointer; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .start-btn:active { transform: scale(0.95); }
+        .login-box button { background: var(--primary-pink); color: white; border-radius: 10px; width: 100%; }
+        .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 10px; width: 100%; text-align: center; margin-bottom: 10px; outline: none; }
 
-        /* شاشة الباسورد */
-        #password-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--white); z-index: 2000;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .login-box { text-align: center; width: 85%; max-width: 400px; }
-        .login-box h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-bottom: 20px; font-size: 1.8rem; }
-        .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 10px; width: 100%; text-align: center; margin-bottom: 10px; font-size: 16px; outline: none; }
-        .login-box button { background: var(--primary-pink); color: white; border: none; padding: 10px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        #main-content { display: none; padding-bottom: 50px; text-align: center; position: relative; z-index: 10; }
+        header h1 { font-family: 'Pacifico'; font-size: 2rem; color: var(--primary-pink); padding: 20px; }
+        .countdown-container { background: white; padding: 10px 20px; border-radius: 15px; width: fit-content; margin: 0 auto 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
+        #countdown { font-size: 1.2rem; color: var(--primary-pink); font-weight: bold; }
 
-        #main-content { display: none; padding-bottom: 50px; text-align: center; }
-        header { padding: 30px 10px; z-index: 10; position: relative; }
-        header h1 { font-family: 'Pacifico'; font-size: 2.2rem; color: var(--primary-pink); }
-        .b-date { font-size: 1.4rem; color: var(--dark-pink); font-weight: bold; }
-
-        .countdown-container { background: white; padding: 10px 20px; border-radius: 15px; width: fit-content; margin: 10px auto; box-shadow: 0 5px 10px rgba(0,0,0,0.1); z-index: 10; position: relative;}
-        #countdown { font-size: 1.4rem; color: var(--primary-pink); font-weight: bold; }
-        
-        /* تأثير كرت الكشط */
+        /* كرت الكشط المطور */
         .scratch-container {
-            position: relative; width: 90%; max-width: 350px; height: 350px;
-            margin: 40px auto; background: white; border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1); overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            position: relative; width: 95%; max-width: 600px; min-height: 350px;
+            margin: 20px auto; background: white; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden;
         }
-        .main-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
-        #scratch-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            cursor: crosshair; z-index: 2;
+        #scratch-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 5; border-radius: 20px; }
+        
+        /* محتوى الميموري (الصورة اللي طلبتها + الرسالة جنب بعض) */
+        .memory-content {
+            display: none; padding: 25px; opacity: 0; transition: 1s;
+            flex-direction: row; align-items: center; justify-content: center; gap: 20px;
         }
-        .scratch-message { display: none; margin-top: 15px; color: var(--dark-pink); font-weight: bold; font-size: 13px; line-height: 1.6; text-align: center;}
+        .memory-content.visible { display: flex; opacity: 1; }
+        .memory-photo { width: 140px; height: 140px; object-fit: cover; border-radius: 15px; border: 3px solid var(--light-pink); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .memory-text { flex: 1; color: var(--dark-pink); font-weight: bold; font-size: 14px; line-height: 1.7; text-align: right; }
 
-        /* تنسيق الأظرف */
-        .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 80px; padding: 20px; z-index: 10; position: relative;}
-        .envelope-wrapper { position: relative; width: 280px; height: 180px; margin-bottom: 120px; }
-        .envelope { position: relative; width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; z-index: 2; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        /* الفقاعات */
+        .bubble {
+            position: fixed; bottom: -100px; background: rgba(255, 255, 255, 0.85);
+            border-radius: 50px; padding: 10px 20px; color: var(--dark-pink);
+            font-weight: bold; font-size: 13px; z-index: 1; animation: floatUp 12s linear forwards;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid rgba(216, 27, 96, 0.2);
+        }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-120vh) translateX(30px); opacity: 0; } }
+
+        /* الأظرف */
+        .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; padding: 20px; margin-top: 30px; }
+        .envelope-wrapper { position: relative; width: 150px; height: 110px; margin-bottom: 90px; }
+        .envelope { position: relative; width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 8px 8px; cursor: pointer; z-index: 2; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .flap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); transition: 0.6s; z-index: 3; transform-origin: top; }
-        .letter { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 92%; height: 92%; background: white; padding: 10px; z-index: 1; transition: 0.6s; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
-        .letter img { width: 100%; height: 110px; object-fit: cover; border-radius: 5px; margin-bottom: 8px; }
-
-        .ar-msg { color: var(--dark-pink); font-weight: bold; margin: 5px 0; font-size: 13px; }
-        .en-msg { opacity: 0; transition: 0.4s; color: #444; font-size: 11px; font-style: italic; line-height: 1.4; text-align: center; }
-
+        .letter { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 92%; height: 92%; background: white; z-index: 1; transition: 0.6s; display: flex; flex-direction: column; align-items: center; padding: 8px; overflow: hidden; }
+        .letter img { width: 100%; height: 65px; object-fit: cover; border-radius: 4px; }
         .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
-        .envelope-wrapper.open .letter { transform: translateX(-50%) translateY(-160px); height: 320px; z-index: 4; }
-        .envelope-wrapper.open .en-msg { opacity: 1; margin-top: 10px; }
+        .envelope-wrapper.open .letter { transform: translateX(-50%) translateY(-110px); height: 200px; z-index: 4; }
+        .ar-msg-small { font-size: 11px; font-weight: bold; color: var(--dark-pink); margin-top: 5px; }
+        .en-msg-small { font-size: 9px; color: #777; margin-top: 3px; opacity: 0; transition: 0.4s; text-align: center; }
+        .envelope-wrapper.open .en-msg-small { opacity: 1; }
 
-        /* تأثير الذكريات المتطايرة */
-        .floating-element { position: fixed; color: #ff4081; animation: floatMemories 8s linear infinite; z-index: 1; pointer-events: none; opacity: 0; font-weight: bold; font-size: 14px; }
-        @keyframes floatMemories { 0% { transform: translateY(100vh) translateX(0); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-10vh) translateX(20px); opacity: 0; } }
-
+        @media (max-width: 500px) {
+            .memory-content { flex-direction: column; text-align: center; }
+            .memory-text { text-align: center; font-size: 13px; }
+            .memory-photo { width: 120px; height: 120px; }
+        }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop><source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg"></audio>
 
     <div id="music-gate">
         <h2 style="font-family:'Pacifico'; font-size: 2.5rem;">Sarsora's World ❤️</h2>
-        <p style="margin-top: 10px;">اضغطي هنا عشان تبدأ المفاجأة</p>
         <button class="start-btn" onclick="startEverything()">شغلي المفاجأة ✨</button>
     </div>
 
     <div id="password-screen">
         <div class="login-box">
-            <h2>كلمة السر ❤️</h2>
-            <input type="password" id="passInput" placeholder="اكتبي كلمة السر اللي قولتلك عليها">
+            <h2 style="color:var(--primary-pink); font-family:'Pacifico'; margin-bottom: 20px;">كلمة السر ❤️</h2>
+            <input type="password" id="passInput" placeholder="اكتبي الباسورد هنا">
             <button onclick="checkPassword()">دخول ✨</button>
         </div>
     </div>
 
     <div id="main-content">
-        <header>
-            <h1>Happy Birthday Sarsora 💖</h1>
-            <div class="b-date">16 / 6 / 2008</div>
-        </header>
-
-        <div class="countdown-container">
-            <span id="countdown">00:00:00:00</span>
-            <span style="font-weight:bold; margin-right:8px; color:#555;">days left sarsora</span>
-        </div>
+        <header><h1>Happy Birthday Sarsora 💖</h1></header>
+        <div class="countdown-container"><span id="countdown">00:00:00:00</span></div>
 
         <div class="scratch-container">
-            <img src="https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png" class="main-photo" alt="Sarsora">
             <canvas id="scratch-canvas"></canvas>
-            <div class="scratch-message" id="scratch-text">
-                امسحي الصورة عشان تشوفي ر سالتك ❤️<br>
-                اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفس نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يرح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐
+            <div class="memory-content" id="memory-box">
+                <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png" class="memory-photo">
+                <div class="memory-text">
+                    اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐
+                </div>
             </div>
         </div>
 
         <div class="envelope-container">
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <img src="https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png">
-                        <p class="ar-msg">بحبك يا روحي ❤️🪐</p>
-                        <p class="en-msg">"Since our first conversation, you've been the quiet spark that changed my world."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
-                        <p class="ar-msg">ربنا يخليكي ليا يا نن عيني ❤️🪐</p>
-                        <p class="en-msg">"From the moment we met, something shifted—like the universe guiding me to you."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <img src="https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png">
-                        <p class="ar-msg">كل سنه واحنا مع بعض يقلبي ❤️🪐</p>
-                        <p class="en-msg">"Even through screens, your laugh reaches me like sunlight. I'm so lucky."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <img src="https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png">
-                        <p class="ar-msg">بجد مش عارف من غيرك كنت هبقى فين ❤️🪐</p>
-                        <p class="en-msg">"Every notification from you feels like a heartbeat. You brighten my whole world."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <img src="https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png">
-                        <p class="ar-msg">أغلى سارسورة في الكوكب ❤️🪐</p>
-                        <p class="en-msg">"My heart knew where it wanted to stay—with you, in every quiet piece of forever."</p>
-                    </div>
-                </div>
-            </div>
-            <div class="envelope-wrapper">
-                <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
-                    <div class="flap"></div>
-                    <div class="letter">
-                        <img src="https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png">
-                        <p class="ar-msg">يا روح قلبي من جوه ❤️🪐</p>
-                        <p class="en-msg">"You're my favorite place to be. I promise to be there, even when the screen is dark."</p>
-                    </div>
-                </div>
-            </div>
+            <div class="envelope-wrapper"><div class="envelope" onclick="this.parentElement.classList.toggle('open')"><div class="flap"></div><div class="letter"><img src="https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png"><p class="ar-msg-small">بحبك يا روحي</p><p class="en-msg-small">My quiet spark ❤️</p></div></div></div>
+            <div class="envelope-wrapper"><div class="envelope" onclick="this.parentElement.classList.toggle('open')"><div class="flap"></div><div class="letter"><img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png"><p class="ar-msg-small">يا نن عيني</p><p class="en-msg-small">Universe's gift ❤️</p></div></div></div>
+            <div class="envelope-wrapper"><div class="envelope" onclick="this.parentElement.classList.toggle('open')"><div class="flap"></div><div class="letter"><img src="https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png"><p class="ar-msg-small">كل سنة سوا</p><p class="en-msg-small">Favorite laugh ❤️</p></div></div></div>
+            <div class="envelope-wrapper"><div class="envelope" onclick="this.parentElement.classList.toggle('open')"><div class="flap"></div><div class="letter"><img src="https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png"><p class="ar-msg-small">بجد بحبك</p><p class="en-msg-small">You brighten my world ❤️</p></div></div></div>
+            <div class="envelope-wrapper"><div class="envelope" onclick="this.parentElement.classList.toggle('open')"><div class="flap"></div><div class="letter"><img src="https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png"><p class="ar-msg-small">أغلى سارسورة</p><p class="en-msg-small">Soul stays with you ❤️</p></div></div></div>
+            <div class="envelope-wrapper"><div class="envelope" onclick="this.parentElement.classList.toggle('open')"><div class="flap"></div><div class="letter"><img src="https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png"><p class="ar-msg-small">يا روح قلبي</p><p class="en-msg-small">Always here for you ❤️</p></div></div></div>
         </div>
     </div>
 
@@ -187,115 +122,78 @@
         const audio = document.getElementById('bgMusic');
 
         function startEverything() {
-            audio.play().catch(e => console.log("Audio activation"));
+            audio.play().catch(e => console.log("Init Audio"));
             document.getElementById('music-gate').style.display = 'none';
             document.getElementById('password-screen').style.display = 'flex';
         }
 
         function checkPassword() {
-            const pass = document.getElementById('passInput').value.toLowerCase().trim();
-            if (pass === 'i love you') {
+            if (document.getElementById('passInput').value.toLowerCase().trim() === 'i love you') {
                 document.getElementById('password-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 startCountdown();
-                setInterval(createFloatingElement, 500); // بدء تأثير الذكريات المتطايرة
-                initScratchCard(); // تهيئة كرت الكشط
-            } else { alert('كلمة السر غلط يا سارسورة! ❤️'); }
+                setInterval(createBubble, 5000); 
+                initScratch();
+            } else { alert('الباسورد غلط يا روحي ❤️'); }
+        }
+
+        function initScratch() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+            
+            ctx.fillStyle = '#fdd835';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#d81b60';
+            ctx.font = 'bold 20px Cairo'; ctx.textAlign = 'center';
+            ctx.fillText('امسحي صورتنا هنا يروحي ❤️', canvas.width/2, canvas.height/2);
+
+            let isDrawing = false;
+            function scratch(e) {
+                if(!isDrawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+                const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI*2); ctx.fill();
+                
+                const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+                let clear = 0;
+                for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
+                if(clear/(pixels.length/4) > 0.4) {
+                    canvas.style.opacity = '0';
+                    setTimeout(() => { 
+                        canvas.style.display = 'none';
+                        document.getElementById('memory-box').classList.add('visible');
+                    }, 500);
+                }
+            }
+            canvas.onmousedown = canvas.ontouchstart = () => isDrawing = true;
+            window.onmouseup = window.ontouchend = () => isDrawing = false;
+            canvas.onmousemove = canvas.ontouchmove = scratch;
+        }
+
+        function createBubble() {
+            const words = ['بحبك ❤️', 'مفيش أحلى من عيونك', 'انتي أغلى حد فحياتي', 'ربنا يجعلنا من نصيب بعض يقمري', 'Sarsora ✨'];
+            const b = document.createElement('div');
+            b.className = 'bubble';
+            b.innerHTML = words[Math.floor(Math.random()*words.length)];
+            b.style.left = (Math.random()*75 + 10) + 'vw';
+            document.body.appendChild(b);
+            setTimeout(() => b.remove(), 12000);
         }
 
         function startCountdown() {
             const target = new Date("June 16, 2026 00:00:00").getTime();
             setInterval(() => {
                 const diff = target - new Date().getTime();
-                const d = Math.floor(diff / (1000*60*60*24));
-                const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-                const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-                const s = Math.floor((diff % (1000*60)) / 1000);
+                const d = Math.floor(diff/86400000);
+                const h = Math.floor((diff%86400000)/3600000);
+                const m = Math.floor((diff%3600000)/60000);
+                const s = Math.floor((diff%60000)/1000);
                 document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
             }, 1000);
-        }
-
-        // تهيئة كرت الكشط
-        function initScratchCard() {
-            const canvas = document.getElementById('scratch-canvas');
-            const ctx = canvas.getContext('2d');
-            const container = canvas.parentElement;
-            
-            canvas.width = container.offsetWidth;
-            canvas.height = container.offsetHeight;
-
-            // رسم الطبقة الذهبية
-            ctx.fillStyle = '#fdd835'; // لون ذهبي
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // إضافة نص توضيحي فوق الكرت
-            ctx.fillStyle = '#d81b60';
-            ctx.font = 'bold 16px Cairo';
-            ctx.textAlign = 'center';
-            ctx.fillText('امسحي الصورة هنا ✨', canvas.width/2, canvas.height/2);
-
-            let isDrawing = false;
-
-            function scratch(e) {
-                if (!isDrawing) return;
-                e.preventDefault();
-                const rect = canvas.getBoundingClientRect();
-                const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-                const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath();
-                ctx.arc(x, y, 25, 0, Math.PI * 2); // حجم صابع الكشط
-                ctx.fill();
-                
-                checkScratchPercentage();
-            }
-
-            function checkScratchPercentage() {
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const pixels = imageData.data;
-                let clearedPixels = 0;
-                for (let i = 0; i < pixels.length; i += 4) {
-                    if (pixels[i + 3] === 0) clearedPixels++;
-                }
-                const percentage = (clearedPixels / (pixels.length / 4)) * 100;
-                // لو مسحت أكتر من 40%، نخفي الطبقة خالص ونظهر الرسالة
-                if (percentage > 40) {
-                    canvas.style.transition = 'opacity 0.5s';
-                    canvas.style.opacity = '0';
-                    setTimeout(() => {
-                        canvas.style.display = 'none';
-                        document.getElementById('scratch-text').style.display = 'block';
-                    }, 500);
-                }
-            }
-
-            canvas.addEventListener('mousedown', () => isDrawing = true);
-            canvas.addEventListener('touchstart', () => isDrawing = true);
-            window.addEventListener('mouseup', () => isDrawing = false);
-            window.addEventListener('touchend', () => isDrawing = false);
-            canvas.addEventListener('mousemove', scratch);
-            canvas.addEventListener('touchmove', scratch);
-        }
-
-        // تأثير الذكريات المتطايرة (قلوب وكلمات)
-        function createFloatingElement() {
-            const memories = ['❤️', 'بحبك اوي', 'أحلى عيون 🪐', 'أغلى حد', 'نصيب بعض يقمري', 'Sarsora', 'June 16'];
-            const e = document.createElement('div');
-            e.className = 'floating-element';
-            // 70% قلوب، 30% كلمات
-            if (Math.random() > 0.3) {
-                e.innerHTML = '❤️';
-                e.style.fontSize = Math.random() * 15 + 10 + 'px';
-            } else {
-                e.innerHTML = memories[Math.floor(Math.random() * memories.length)];
-                e.style.fontSize = Math.random() * 5 + 12 + 'px';
-            }
-            
-            e.style.left = Math.random() * 100 + 'vw';
-            e.style.animationDuration = Math.random() * 3 + 5 + 's'; // سرعة عشوائية
-            document.body.appendChild(e);
-            setTimeout(() => e.remove(), 8000);
         }
     </script>
 </body>
