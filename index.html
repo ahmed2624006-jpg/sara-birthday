@@ -10,7 +10,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--light-pink); overflow-x: hidden; min-height: 100vh; }
 
-        /* شاشة البداية لتفعيل الصوت */
+        /* شاشة البداية */
         #music-gate {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--primary-pink); z-index: 2000;
@@ -21,7 +21,9 @@
             background: white; color: var(--primary-pink); border: none;
             padding: 15px 40px; border-radius: 50px; font-size: 18px; font-weight: bold;
             cursor: pointer; margin-top: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
+        .start-btn:active { transform: scale(0.95); }
 
         /* شاشة الباسورد */
         #password-screen {
@@ -30,8 +32,9 @@
             display: none; flex-direction: column; justify-content: center; align-items: center;
         }
         .login-box { text-align: center; width: 85%; max-width: 400px; }
+        .login-box h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-bottom: 20px; font-size: 1.8rem; }
         .login-box input { padding: 12px; border: 2px solid var(--primary-pink); border-radius: 10px; width: 100%; text-align: center; margin-bottom: 10px; font-size: 16px; outline: none; }
-        .login-box button { background: var(--primary-pink); color: white; border: none; padding: 10px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .login-box button { background: var(--primary-pink); color: white; border: none; padding: 10px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
 
         #main-content { display: none; padding-bottom: 50px; text-align: center; }
         header { padding: 30px 10px; }
@@ -40,39 +43,28 @@
 
         .countdown-container { background: white; padding: 10px 20px; border-radius: 15px; width: fit-content; margin: 10px auto; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
         #countdown { font-size: 1.4rem; color: var(--primary-pink); font-weight: bold; }
-        .days-left-text { font-size: 1rem; color: #555; margin-right: 8px; font-weight: bold; }
-
+        
         .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 80px; padding: 20px; }
         .envelope-wrapper { position: relative; width: 280px; height: 180px; margin-bottom: 120px; }
-        
         .envelope { position: relative; width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; z-index: 2; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .flap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); transition: 0.6s; z-index: 3; transform-origin: top; }
-        
-        .letter { 
-            position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); 
-            width: 92%; height: 92%; background: white; padding: 10px; z-index: 1; 
-            transition: 0.6s; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column; align-items: center; overflow: hidden;
-        }
+        .letter { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 92%; height: 92%; background: white; padding: 10px; z-index: 1; transition: 0.6s; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
         .letter img { width: 100%; height: 110px; object-fit: cover; border-radius: 5px; margin-bottom: 8px; }
 
-        /* تنسيق الرسائل */
         .ar-msg { color: var(--dark-pink); font-weight: bold; margin: 5px 0; font-size: 13px; }
         .en-msg { opacity: 0; transition: 0.4s; color: #444; font-size: 11px; font-style: italic; line-height: 1.4; text-align: center; }
 
-        /* الأكشن عند فتح الظرف */
         .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
         .envelope-wrapper.open .letter { transform: translateX(-50%) translateY(-160px); height: 320px; z-index: 4; }
         .envelope-wrapper.open .en-msg { opacity: 1; margin-top: 10px; }
 
-        /* القلوب المتطايرة */
         .heart { position: fixed; color: #ff4081; animation: float 5s linear infinite; z-index: -1; pointer-events: none; }
         @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg">
     </audio>
 
@@ -84,8 +76,8 @@
 
     <div id="password-screen">
         <div class="login-box">
-            <h2 style="font-family:'Pacifico'; color:var(--primary-pink); margin-bottom:20px; font-size: 1.8rem;">كلمة السر ❤️</h2>
-            <input type="password" id="passInput" placeholder="اكتب i love you هنا">
+            <h2>كلمة السر ❤️</h2>
+            <input type="password" id="passInput" placeholder="اكتبي كلمة السر اللي قولتلك عليها">
             <button onclick="checkPassword()">دخول ✨</button>
         </div>
     </div>
@@ -95,10 +87,9 @@
             <h1>Happy Birthday Sarsora 💖</h1>
             <div class="b-date">16 / 6 / 2008</div>
         </header>
-
         <div class="countdown-container">
             <span id="countdown">00:00:00:00</span>
-            <span class="days-left-text">days left sarsora</span>
+            <span style="font-weight:bold; margin-right:8px; color:#555;">days left sarsora</span>
         </div>
 
         <div class="envelope-container">
@@ -108,62 +99,57 @@
                     <div class="letter">
                         <img src="https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png">
                         <p class="ar-msg">بحبك يا روحي ❤️🪐</p>
-                        <p class="en-msg">"Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be."</p>
+                        <p class="en-msg">"Since our first conversation, you've been the quiet spark that changed my world."</p>
                     </div>
                 </div>
             </div>
-
             <div class="envelope-wrapper">
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
                         <img src="https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png">
                         <p class="ar-msg">ربنا يخليكي ليا يا نن عيني ❤️🪐</p>
-                        <p class="en-msg">"From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light."</p>
+                        <p class="en-msg">"From the moment we met, something in my life shifted—like the universe guiding me to you."</p>
                     </div>
                 </div>
             </div>
-
             <div class="envelope-wrapper">
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
                         <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
                         <p class="ar-msg">كل سنه واحنا مع بعض يقلبي ❤️🪐</p>
-                        <p class="en-msg">"Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget."</p>
+                        <p class="en-msg">"Even through screens, your laugh reaches me like sunlight. I'm so lucky."</p>
                     </div>
                 </div>
             </div>
-
             <div class="envelope-wrapper">
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
                         <img src="https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png">
                         <p class="ar-msg">بجد مش عارف من غيرك كنت هبقى فين ❤️🪐</p>
-                        <p class="en-msg">"Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world."</p>
+                        <p class="en-msg">"Every notification from you feels like a heartbeat. You brighten my whole world."</p>
                     </div>
                 </div>
             </div>
-
             <div class="envelope-wrapper">
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
                         <img src="https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png">
                         <p class="ar-msg">أغلى سارسورة في الكوكب ❤️🪐</p>
-                        <p class="en-msg">"Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever."</p>
+                        <p class="en-msg">"My heart knew where it wanted to stay—with you, in every quiet piece of forever."</p>
                     </div>
                 </div>
             </div>
-
             <div class="envelope-wrapper">
                 <div class="envelope" onclick="this.parentElement.classList.toggle('open')">
                     <div class="flap"></div>
                     <div class="letter">
                         <img src="https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png">
                         <p class="ar-msg">يا روح قلبي من جوه ❤️🪐</p>
-                        <p class="en-msg">"You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark."</p>
+                        <p class="en-msg">"You're not just a person, you're my favorite place to be. I promise to be there, always."</p>
                     </div>
                 </div>
             </div>
@@ -174,4 +160,48 @@
         const audio = document.getElementById('bgMusic');
 
         function startEverything() {
-            audio.play().catch(e => console.log("Audio activation
+            // محاولة تشغيل الصوت فوراً
+            audio.play().catch(e => console.log("Audio waiting for interaction"));
+            
+            // الانتقال الفوري لشاشة الباسورد
+            document.getElementById('music-gate').style.display = 'none';
+            document.getElementById('password-screen').style.display = 'flex';
+        }
+
+        function checkPassword() {
+            const pass = document.getElementById('passInput').value.toLowerCase().trim();
+            // كلمة السر لسه زي ما هي i love you بس الكتابة في الـ placeholder اتغيرت
+            if (pass === 'i love you') {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                startCountdown();
+                setInterval(createHeart, 300);
+            } else { 
+                alert('كلمة السر غلط يا سارسورة! جربي تاني ❤️'); 
+            }
+        }
+
+        function startCountdown() {
+            const target = new Date("June 16, 2026 00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                const d = Math.floor(diff / (1000*60*60*24));
+                const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+                const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+                const s = Math.floor((diff % (1000*60)) / 1000);
+                document.getElementById("countdown").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+            }, 1000);
+        }
+
+        function createHeart() {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️'; h.className = 'heart';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
