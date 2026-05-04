@@ -28,69 +28,76 @@
         #main-content { display: none; padding-bottom: 50px; text-align: center; }
         header h1 { font-family: 'Pacifico'; font-size: 2.2rem; color: var(--primary-pink); padding: 25px; }
 
+        /* كارت الكشط الكبير */
+        .scratch-box { width: 95%; max-width: 650px; margin: 20px auto; background: white; border-radius: 20px; position: relative; min-height: 300px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; cursor: crosshair; }
+        .scratch-content { padding: 30px; display: flex; align-items: center; gap: 20px; text-align: right; opacity: 0; transition: 1s; }
+        .scratch-content.visible { opacity: 1; }
+        .scratch-content img { width: 150px; height: 150px; object-fit: cover; border-radius: 15px; border: 4px solid var(--light-pink); }
+        .scratch-content p { font-size: 15px; font-weight: bold; color: var(--dark-pink); line-height: 1.8; flex: 1; }
+
         /* الأظرف */
         .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 20px; margin-top: 20px; }
-        .envelope-wrapper { width: 220px; height: 150px; position: relative; cursor: pointer; }
+        .envelope-wrapper { width: 220px; height: 150px; position: relative; cursor: pointer; transition: 0.3s; }
+        .envelope-wrapper:hover { transform: translateY(-5px); }
         .envelope-img { width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .envelope-img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); }
         .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
 
-        /* مودال الكتاب (بيظهر في نص الشاشة) */
+        /* مودال الكتاب (في نص الشاشة) */
         .book-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 10000;
+            background: rgba(0,0,0,0.7); z-index: 10000;
             display: none; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px); padding: 10px;
         }
         .book-container {
-            width: 90%; max-width: 800px; height: 450px;
+            width: 100%; max-width: 850px; height: 480px;
             background: white; border-radius: 15px;
             display: flex; overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            animation: openBook 0.6s ease-out;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            animation: openBook 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
-        @keyframes openBook { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes openBook { from { transform: scale(0.7) rotateY(-20deg); opacity: 0; } to { transform: scale(1) rotateY(0); opacity: 1; } }
 
-        /* الصفحة الشمال (الكلام) */
+        /* الصفحة الشمال (الكلام الإنجليزي) */
         .book-left {
-            flex: 1.2; padding: 40px; display: flex; flex-direction: column;
-            justify-content: center; text-align: left; background: #fff;
-            border-right: 2px solid #f0f0f0;
+            flex: 1.3; padding: 45px; display: flex; flex-direction: column;
+            justify-content: center; text-align: left; background: #ffffff;
+            border-right: 1px solid #eee; position: relative;
         }
-        .book-left p { font-size: 1.2rem; color: #444; font-style: italic; line-height: 1.6; font-family: 'Georgia', serif; }
+        /* خط وهمي في نص الكتاب */
+        .book-left::after { content: ''; position: absolute; right: 0; top: 5%; height: 90%; width: 1px; background: linear-gradient(to bottom, transparent, #ddd, transparent); }
+        .book-left p { font-size: 1.3rem; color: #333; font-style: italic; line-height: 1.7; font-family: 'Playfair Display', serif; }
 
-        /* الصفحة اليمين (الصورة + هابي بيرث داي) */
+        /* الصفحة اليمين (الصورة) */
         .book-right {
-            flex: 1; background: #fdf2f8; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 20px;
+            flex: 1; background: #fffcfd; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 25px;
         }
-        .book-right img { width: 90%; height: 70%; object-fit: cover; border-radius: 10px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 15px; font-size: 1.5rem; }
+        .book-right img { width: 95%; height: 75%; object-fit: cover; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 4px solid white; }
+        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 18px; font-size: 1.6rem; }
 
-        .close-book {
-            position: absolute; top: 15px; right: 20px; font-size: 30px;
-            color: #999; cursor: pointer; z-index: 10;
-        }
+        .close-book { position: absolute; top: 15px; right: 20px; font-size: 35px; color: #555; cursor: pointer; z-index: 10; transition: 0.2s; }
+        .close-book:hover { color: var(--primary-pink); }
 
-        /* كارت الكشط */
-        .scratch-box { width: 90%; max-width: 600px; margin: 20px auto; background: white; border-radius: 20px; position: relative; min-height: 250px; overflow: hidden; }
-        #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 5; }
-        .scratch-content { padding: 30px; display: flex; align-items: center; gap: 20px; text-align: right; }
-
-        /* فقاعات الكلام */
+        /* الفقاعات */
         .bubble {
-            position: fixed; bottom: -100px; background: rgba(255,255,255,0.8);
-            padding: 10px 20px; border-radius: 50px; color: var(--primary-pink);
-            font-weight: bold; z-index: 1; animation: floatUp 6s linear forwards;
-            border: 1px solid var(--primary-pink);
+            position: fixed; bottom: -100px; background: rgba(255,255,255,0.75);
+            padding: 10px 22px; border-radius: 50px; color: var(--primary-pink);
+            font-weight: bold; z-index: 1; animation: floatUp 7s linear forwards;
+            border: 1px solid rgba(216, 27, 96, 0.3); white-space: nowrap; font-size: 14px;
         }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-120vh); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-125vh) translateX(30px); opacity: 0; } }
 
         @media (max-width: 768px) {
-            .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; }
-            .book-left { padding: 20px; text-align: center; }
-            .book-right img { height: 200px; }
+            .book-container { flex-direction: column-reverse; height: auto; max-height: 95vh; }
+            .book-left { padding: 25px; text-align: center; flex: none; }
+            .book-left p { font-size: 1.1rem; }
+            .book-right { flex: none; padding: 20px; }
+            .book-right img { height: 220px; }
+            .scratch-content { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -99,13 +106,13 @@
     <audio id="bgMusic" loop><source src="https://files.catbox.moe/3a3mje.mp3" type="audio/mpeg"></audio>
 
     <div id="music-gate">
-        <h2 style="font-family:'Pacifico'; font-size: 2.5rem;">Sarsora's World ❤️🪐</h2>
+        <h2 style="font-family:'Pacifico'; font-size: 2.8rem;">Sarsora's World ❤️🪐</h2>
         <button class="start-btn" onclick="startEverything()">شغلي المفاجأة ✨</button>
     </div>
 
     <div id="password-screen">
         <div class="login-box">
-            <h2 style="font-family:'Pacifico'; color:var(--primary-pink);">كلمة السر ❤️</h2>
+            <h2 style="font-family:'Pacifico'; color:var(--primary-pink); font-size: 2rem;">كلمة السر ❤️</h2>
             <input type="password" id="passInput" placeholder="اكتبي الباسورد هنا">
             <button onclick="checkPassword()">دخول ✨</button>
         </div>
@@ -116,14 +123,13 @@
 
         <div class="scratch-box">
             <canvas id="scratch-canvas"></canvas>
-            <div class="scratch-content">
-                <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png" style="width:100px; border-radius:10px;">
-                <p style="font-size:14px; font-weight:bold; color:var(--dark-pink);">اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي.. كل سنة وانتي طيبة يروحي ❤️🪐</p>
+            <div class="scratch-content" id="scratchResult">
+                <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
+                <p>اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐</p>
             </div>
         </div>
 
-        <div class="envelope-container" id="container">
-            </div>
+        <div class="envelope-container" id="container"></div>
     </div>
 
     <div class="book-overlay" id="bookOverlay">
@@ -140,13 +146,14 @@
     </div>
 
     <script>
+        // النصوص الأصلية للأظرف (الرسائل الإنجليزية الطويلة)
         const data = [
-            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world.", ar: "بحبك يا روحي ❤️" },
-            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe guiding me to you.", ar: "نن عيني ❤️" },
-            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens, your laugh reaches me like sunlight—warm and impossible to forget.", ar: "كل سنة واحنا سوا ❤️" },
-            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.'", ar: "أغلى من حياتي ❤️" },
-            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "My heart knew where it wanted to stay—with you, in every quiet piece of forever.", ar: "أحلى سارسورة ❤️" },
-            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person, you're my favorite place to be. Always here for you.", ar: "أقرب حد لقلبي ❤️" }
+            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be.", ar: "بحبك يا روحي ❤️🪐" },
+            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light.", ar: "ربنا يخليكي ليا يا نن عيني ❤️🪐" },
+            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget.", ar: "كل سنه واحنا مع بعض يقلبي ❤️🪐" },
+            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world.", ar: "بجد مش عارف من غيرك كنت هبقى فين ❤️🪐" },
+            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever.", ar: "أغلى سارسورة في الدنيا ❤️🪐" },
+            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark.", ar: "أقرب واحدة لقلبي ❤️🪐" }
         ];
 
         function startEverything() {
@@ -161,18 +168,19 @@
                 document.getElementById('main-content').style.display = 'block';
                 renderEnvelopes();
                 initScratch();
+                // الفقاعات بنصوصها الأصلية
                 setInterval(createBubble, 3000);
-            } else { alert('الباسورد غلط ❤️'); }
+            } else { alert('الباسورد غلط يا روحي ❤️'); }
         }
 
         function renderEnvelopes() {
             const container = document.getElementById('container');
             data.forEach((item, index) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'envelope-wrapper';
-                wrapper.innerHTML = `<div class="envelope-img"></div><span class="outer-ar-msg">${item.ar}</span>`;
-                wrapper.onclick = () => openBook(index);
-                container.appendChild(wrapper);
+                const div = document.createElement('div');
+                div.className = 'envelope-wrapper';
+                div.innerHTML = `<div class="envelope-img"></div><span class="outer-ar-msg">${item.ar}</span>`;
+                div.onclick = () => openBook(index);
+                container.appendChild(div);
             });
         }
 
@@ -189,34 +197,48 @@
         function initScratch() {
             const canvas = document.getElementById('scratch-canvas');
             const ctx = canvas.getContext('2d');
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
-            ctx.fillStyle = '#fdd835';
+            const box = document.querySelector('.scratch-box');
+            canvas.width = box.offsetWidth;
+            canvas.height = box.offsetHeight;
+            
+            ctx.fillStyle = '#fdd835'; // اللون الذهبي
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 18px Cairo'; ctx.textAlign = 'center';
+            ctx.fillStyle = '#d81b60'; ctx.font = 'bold 20px Cairo'; ctx.textAlign = 'center';
             ctx.fillText('خربشي الكارت يروحي ❤️🪐', canvas.width/2, canvas.height/2);
 
             let drawing = false;
-            canvas.onmousedown = canvas.ontouchstart = () => drawing = true;
-            window.onmouseup = window.ontouchend = () => drawing = false;
-            canvas.onmousemove = canvas.ontouchmove = (e) => {
+            const start = () => drawing = true;
+            const end = () => drawing = false;
+            const move = (e) => {
                 if(!drawing) return;
                 const rect = canvas.getBoundingClientRect();
                 const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
                 const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 30, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI*2); ctx.fill();
+                
+                // فحص نسبة الكشط لإخفاء الكانفاس
+                const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+                let clear = 0;
+                for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
+                if(clear/(pixels.length/4) > 0.4) {
+                    canvas.style.display = 'none';
+                    document.getElementById('scratchResult').classList.add('visible');
+                }
             };
+            canvas.onmousedown = canvas.ontouchstart = start;
+            window.onmouseup = window.ontouchend = end;
+            canvas.onmousemove = canvas.ontouchmove = move;
         }
 
         function createBubble() {
-            const words = ['بحبك ❤️', 'سارسورة ✨', 'يقلبي 🪐', 'جميلتي'];
+            const words = ['بحبك اوي ❤️🪐', 'أغلى سارسورة', 'يا نصيبي يقمري', 'أنتي كوني كله ✨', 'سارسورة قلبي', 'كل سنة وانتي طيبة'];
             const b = document.createElement('div');
             b.className = 'bubble';
             b.innerText = words[Math.floor(Math.random()*words.length)];
-            b.style.left = Math.random()*80 + 10 + 'vw';
+            b.style.left = Math.random()*75 + 10 + 'vw';
             document.body.appendChild(b);
-            setTimeout(() => b.remove(), 6000);
+            setTimeout(() => b.remove(), 7000);
         }
     </script>
 </body>
