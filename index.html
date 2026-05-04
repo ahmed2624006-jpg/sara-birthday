@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Sarsora's Birthday ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Pacifico&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-pink: #d81b60; --light-pink: #ffe4ec; --dark-pink: #ad1457; --white: #ffffff; }
+        :root { 
+            --primary-pink: #d81b60; 
+            --light-pink: #ffe4ec; 
+            --dark-pink: #ad1457; 
+            --book-bg: #fff0f5; /* لون خلفية الكتاب البينك الناعم */
+            --white: #ffffff; 
+        }
+        
         * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--light-pink); overflow-x: hidden; min-height: 100vh; user-select: none; }
 
@@ -49,26 +56,40 @@
         .envelope-img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); }
         .outer-ar-msg { color: var(--dark-pink); font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
 
-        /* مودال الكتاب */
+        /* مودال الكتاب - المطور */
         .book-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 10px; }
-        .book-container { width: 100%; max-width: 850px; height: 480px; background: white; border-radius: 15px; display: flex; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.4); animation: openBook 0.5s ease-out; position: relative; }
-        .book-left { flex: 1.3; padding: 45px; display: flex; flex-direction: column; justify-content: center; text-align: left; background: #ffffff; border-right: 1px solid #eee; position: relative; }
-        .book-left p { font-size: 1.3rem; color: #333; font-style: italic; line-height: 1.7; }
-        .book-right { flex: 1; background: #fffcfd; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; }
-        .book-right img { width: 95%; height: 75%; object-fit: cover; border-radius: 10px; border: 4px solid white; }
-        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 18px; font-size: 1.6rem; }
-        .close-book { position: absolute; top: 15px; right: 20px; font-size: 35px; color: #555; cursor: pointer; z-index: 10; }
+        .book-container { 
+            width: 95%; max-width: 850px; height: 500px; 
+            background: var(--book-bg); /* تغيير الخلفية هنا */
+            border-radius: 15px; display: flex; overflow: hidden; 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4); animation: openBook 0.5s ease-out; position: relative; 
+            border: 8px solid white;
+        }
+        
+        .book-left { 
+            flex: 1.2; padding: 40px; display: flex; flex-direction: column; justify-content: center; 
+            text-align: left; background: var(--book-bg); border-right: 1px solid rgba(216, 27, 96, 0.1); 
+        }
+        .book-left p { 
+            font-family: 'Playfair Display', serif; /* الخط الإنجليزي الفخم */
+            font-size: 1.4rem; color: var(--dark-pink); font-style: italic; line-height: 1.6; 
+        }
+
+        .book-right { flex: 1; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .book-right img { width: 90%; height: 80%; object-fit: cover; border-radius: 10px; border: 5px solid var(--light-pink); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .book-right h2 { font-family: 'Pacifico'; color: var(--primary-pink); margin-top: 15px; font-size: 1.5rem; }
+        
+        .close-book { position: absolute; top: 10px; right: 15px; font-size: 30px; color: var(--primary-pink); cursor: pointer; z-index: 10; font-weight: bold;}
 
         /* الفقاعات */
         .bubble { position: fixed; bottom: -100px; background: rgba(255,255,255,0.75); padding: 10px 22px; border-radius: 50px; color: var(--primary-pink); font-weight: bold; z-index: 1; animation: floatUp 7s linear forwards; border: 1px solid rgba(216, 27, 96, 0.3); white-space: nowrap; font-size: 14px; }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-125vh); opacity: 0; } }
 
         @media (max-width: 768px) {
-            .book-container { flex-direction: column-reverse; height: auto; max-height: 95vh; }
-            .book-left { padding: 25px; }
-            .book-right img { height: 220px; }
+            .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; }
+            .book-left { padding: 25px; text-align: center; }
+            .book-right img { height: 250px; }
             .countdown-section { padding: 15px; }
-            .countdown-label { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -112,22 +133,24 @@
     <div class="book-overlay" id="bookOverlay">
         <div class="book-container">
             <span class="close-book" onclick="closeBook()">&times;</span>
-            <div class="book-left"><p id="bookText"></p></div>
+            <div class="book-left">
+                <p id="bookText"></p>
+            </div>
             <div class="book-right">
                 <img id="bookImg" src="">
-                <h2>Happy Birthday ✨</h2>
+                <h2 id="bookCaption">Happy Birthday ✨</h2>
             </div>
         </div>
     </div>
 
     <script>
         const data = [
-            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be.", ar: "بحبك يا روحي ❤️🪐" },
-            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light.", ar: "ربنا يخليكي ليا يا نن عيني ❤️🪐" },
-            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget.", ar: "كل سنه واحنا مع بعض يقلبي ❤️🪐" },
-            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world.", ar: "بجد مش عارف من غيرك كنت هبقى فين ❤️🪐" },
-            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever.", ar: "أغلى سارسورة في الدنيا ❤️🪐" },
-            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark.", ar: "أقرب واحدة لقلبي ❤️🪐" }
+            { img: "https://i.postimg.cc/TP3DHt4m/Screenshot-2026-05-04-062811.png", en: "Since our first conversation, you've been the quiet spark that changed my world, turning ordinary days into moments that feel beautifully meant to be.", ar: "بحبك يا روحي ❤️🪐", caption: "Together Forever" },
+            { img: "https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png", en: "From the moment we met, something in my life shifted—like the universe quietly guiding me toward someone meant for me. You are my light.", ar: "ربنا يخليكي ليا يا نن عيني ❤️🪐", caption: "Universe's Gift" },
+            { img: "https://i.postimg.cc/65KTmH7M/Screenshot-2026-05-04-063027.png", en: "Even through screens and pixels, your laugh reaches me like sunlight through a window—warm, real, and impossible to forget.", ar: "كل سنه واحنا مع بعض يقلبي ❤️🪐", caption: "Our Moments" },
+            { img: "https://i.postimg.cc/13pQdmQs/Screenshot-2026-05-04-060037.png", en: "Every notification from you feels like a heartbeat whispering 'I'm here.' One picture from you can brighten my whole world.", ar: "بجد مش عارف من غيرك كنت هبقى فين ❤️🪐", caption: "My Happiness" },
+            { img: "https://i.postimg.cc/PNs7bDNF/Screenshot-2026-05-04-060239.png", en: "Ever since we met, my heart knew where it wanted to stay—with you, in every soft moment and every quiet piece of forever.", ar: "أغلى سارسورة في الدنيا ❤️🪐", caption: "Soulmate" },
+            { img: "https://i.postimg.cc/13jmsMzp/Screenshot-2026-05-04-063209.png", en: "You're not just a person to me, you're my favorite place to be. I promise to be there, even when the screen is dark.", ar: "أقرب واحدة لقلبي ❤️🪐", caption: "Always With You" }
         ];
 
         function startEverything() {
@@ -173,6 +196,7 @@
         function openBook(index) {
             document.getElementById('bookImg').src = data[index].img;
             document.getElementById('bookText').innerText = data[index].en;
+            document.getElementById('bookCaption').innerText = data[index].caption;
             document.getElementById('bookOverlay').style.display = 'flex';
         }
 
