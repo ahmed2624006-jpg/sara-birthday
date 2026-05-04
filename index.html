@@ -33,7 +33,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* شاشة الباسورد */
+        /* شاشة الباسورد والقلوب */
         #password-screen { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); display: none; z-index: 8000; overflow: hidden;
@@ -53,6 +53,7 @@
         .start-btn {
             background: white; color: var(--primary-pink); border: none; padding: 18px 45px; 
             border-radius: 50px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .login-box button { background: var(--primary-pink); color: white; width: 100%; border-radius: 12px; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
@@ -62,25 +63,23 @@
         #main-content { display: none; padding-bottom: 50px; text-align: center; }
         header h1 { font-family: 'Pacifico'; font-size: 2.2rem; color: var(--primary-pink); padding: 25px; }
 
-        /* العداد وكارت الكشط */
         .countdown-section { background: white; padding: 25px; border-radius: 30px; width: fit-content; margin: 0 auto 30px; border: 2px solid var(--primary-pink); }
+        .countdown-label { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: var(--dark-pink); }
         #countdown { font-size: 1.8rem; color: var(--primary-pink); font-weight: 700; font-family: sans-serif; letter-spacing: 2px; }
+
+        /* كارت الكشط الكبير */
         .scratch-box { width: 95%; max-width: 650px; margin: 20px auto; background: white; border-radius: 20px; position: relative; min-height: 300px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; cursor: crosshair; }
         .scratch-content { padding: 30px; display: flex; align-items: center; gap: 20px; text-align: right; opacity: 0; transition: 1s; }
         .scratch-content.visible { opacity: 1; }
-        .scratch-content img { width: 150px; height: 150px; object-fit: cover; border-radius: 15px; }
+        .scratch-content img { width: 150px; height: 150px; object-fit: cover; border-radius: 15px; border: 4px solid var(--light-pink); }
+        .scratch-content p { font-size: 15px; font-weight: bold; color: var(--dark-pink); line-height: 1.8; flex: 1; }
 
-        /* حاوية الأظرف */
+        /* الأظرف */
         .envelope-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 20px; margin-top: 20px; }
         .envelope-wrapper { 
-            width: 220px; 
-            height: 150px; 
-            position: relative; 
-            cursor: pointer; 
-            transition: 0.3s;
-            -webkit-tap-highlight-color: transparent;
-            z-index: 50; /* لضمان قابلية الضغط */
+            width: 220px; height: 150px; position: relative; cursor: pointer; transition: 0.3s;
+            -webkit-tap-highlight-color: transparent; z-index: 50;
         }
         .envelope-img { width: 100%; height: 100%; background: #f48fb1; border-radius: 0 0 10px 10px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); pointer-events: none; }
         .envelope-img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #e91e63; clip-path: polygon(0 0, 50% 55%, 100% 0); }
@@ -98,8 +97,6 @@
         .book-right { flex: 1; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
         .book-right img { width: 90%; height: 80%; object-fit: cover; border-radius: 10px; border: 5px solid var(--light-pink); }
         .close-book { position: absolute; top: 15px; right: 20px; font-size: 35px; color: var(--primary-pink); cursor: pointer; z-index: 11; font-weight: bold; }
-
-        @keyframes openBook { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         @media (max-width: 768px) {
             .book-container { flex-direction: column-reverse; height: auto; max-height: 90vh; overflow-y: auto; }
@@ -129,7 +126,7 @@
     <div id="main-content">
         <header><h1>Happy Birthday Sarsora 💖🪐</h1></header>
         <div class="countdown-section">
-            <span class="countdown-label" style="font-family:'Pacifico'; color:var(--dark-pink); font-size:1.8rem;">Days Left ❤️</span><br>
+            <span class="countdown-label">Days Left ❤️</span><br>
             <span id="countdown">00:00:00:00</span>
         </div>
 
@@ -137,7 +134,7 @@
             <canvas id="scratch-canvas"></canvas>
             <div class="scratch-content" id="scratchResult">
                 <img src="https://i.postimg.cc/x82jBCdQ/Screenshot-2026-05-04-063115.png">
-                <p>اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض.. بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐</p>
+                <p>اخر يوم شوفتك فيه بجد كان احلى يوم فحياتي كنت مبسوط اوي بفرحتك كنت حاسس ان عينك بتضحك معاكي وبجد نفسي نعمل ذكريات اكتر بكتير اوي مع بعض بدعي ربنا بجد انك تكوني من نصيبي يحبيبتي عشان محسبش هشوفك امتى وازاي عايزك معايا وجنبي ع طول يروح قلبي كل سنه وانتي طيبه ينن عيني وكل سنه واحنا مع بعض يروح قلبي بحبك اوي والله ربنا يخليكي ليا يروحي ❤️🪐</p>
             </div>
         </div>
 
@@ -169,7 +166,7 @@
             document.getElementById('bgMusic').play();
             document.getElementById('music-gate').style.display = 'none';
             document.getElementById('password-screen').style.display = 'flex';
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<25; i++) {
                 const h = document.createElement('div');
                 h.className = 'bg-heart'; h.innerHTML = '❤️';
                 h.style.left = Math.random()*100+'vw'; h.style.animationDuration = (Math.random()*3+2)+'s';
@@ -192,14 +189,11 @@
                 div.className = 'envelope-wrapper';
                 div.innerHTML = `<div class="envelope-img"></div><span class="outer-ar-msg">${item.ar}</span>`;
                 
-                // إضافة أحداث الضغط للكمبيوتر والموبايل معاً
                 div.addEventListener('click', () => openBook(index));
                 div.addEventListener('touchend', (e) => {
-                    // منع تنفيذ الكليك العادي إذا اشتغل التاتش لضمان السرعة
                     e.preventDefault(); 
                     openBook(index);
                 });
-
                 container.appendChild(div);
             });
         }
@@ -233,11 +227,11 @@
 
             const scratch = (x, y) => {
                 ctx.globalCompositeOperation = 'destination-out';
-                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(x, y, 40, 0, Math.PI*2); ctx.fill();
                 const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                 let clear = 0;
                 for(let i=3; i<pixels.length; i+=4) if(pixels[i]===0) clear++;
-                if(clear/(pixels.length/4) > 0.4) {
+                if(clear/(pixels.length/4) > 0.45) {
                     canvas.style.display = 'none';
                     document.getElementById('scratchResult').classList.add('visible');
                 }
